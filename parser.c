@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 11:37:38 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/03 16:42:06 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/04 12:25:00 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void make_map(t_data *data)
     data->map_l = 8;
 	data->x = 3.45;
 	data->y = 6.45;
+	data->press = 0;
 }
 
 void put_square(t_data *data, int j, int i)
@@ -71,7 +72,7 @@ void make_img(t_data *data)
 	}
 }
 
-void make_player(t_data *data)
+void make_player(t_data *data, int color)
 {
 	int i;
 	int j;
@@ -82,7 +83,10 @@ void make_player(t_data *data)
 		i = 0;
 		while (i < 10)
 		{
-			my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x000000FF);
+			if (color == 0)
+				my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x000000FF);
+			else
+				my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x00000000);
 			i++;
 		}
 		j++;

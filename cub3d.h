@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/03 16:39:23 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:59:30 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,15 @@ typedef struct s_data {
 	float 	y;
 	int 	map_l;
 	int		map_h;
+	
+	int     press;
 }				t_data;
 
 /* main */
+int un_presskey(t_data *data);
+int presskey(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void move_player(t_data *data, int x, int y);
+void move_player(t_data *data, float x, float y);
 
 /* utils */
 int	exit_mlx(t_data	*data);
@@ -74,7 +78,7 @@ int	exit_mlx(t_data	*data);
 void make_map(t_data *data);
 void put_square(t_data *data, int j, int i);
 void make_img(t_data *data);
-void make_player(t_data *data);
+void make_player(t_data *data, int color);
 
 /* libft */
 char	*ft_strdup(const char *s1);
