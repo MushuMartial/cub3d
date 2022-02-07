@@ -2,8 +2,8 @@ NAME = cub3D
 SRC = main.c parser.c libft.c utils.c
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
-LINKS = -lmlx -framework OpenGL -framework AppKit
+CFLAGS = -Wall -Wextra -Werror -g
+LINKS = -lmlx -framework OpenGL -framework AppKit 
 CC = gcc
 RM = rm -rf
 

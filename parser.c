@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 11:37:38 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/04 12:25:00 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:47:24 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void make_map(t_data *data)
     data->map_h = 8;
     data->map_l = 8;
 	data->x = 3.45;
+	data->add_x = 0;
+	data->add_y = 0;
 	data->y = 6.45;
 	data->press = 0;
 }

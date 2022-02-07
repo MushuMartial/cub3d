@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:27 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/04 15:01:17 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/07 15:49:48 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,53 +20,59 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	key_hook(int keycode, t_data *data)
+int move_test(t_data *data)
+{
+	if (data->press == 1)
+	{
+		make_img(data);
+		make_player(data, 1);
+		data->x += data->add_x;
+		data->y += data->add_y;
+		make_player(data, 0);
+		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	}
+	return(0);
+}
+
+void moving(t_data *data, float x, float y, int pres)
+{
+	if (data->add_x != 0 && data->add_y != 0 && pres == 0)
+		(void)NULL;
+	else
+		data->press = pres;
+	if (data->add_x != x)
+		data->add_x += x;
+	if (data->add_y != y)
+		data->add_y += y;
+}
+
+int presskey(int keycode, t_data *data)
 {
 	if (keycode == 53)
 		exit_mlx(data);
 	if (keycode == 0)//left
-	{
-		move_player(data, -1, 0);
-	}
+		moving(data, -0.015, 0, 1);
 	else if (keycode == 2)//droit
-	{
-		move_player(data, 1, 0);
-	}
+		moving(data, 0.015, 0, 1);
 	else if (keycode == 13)//up
-	{
-		move_player(data, 0, -1);
-	}
+		moving(data, 0, -0.015, 1);
 	else if (keycode == 1)//down
-	{
-		move_player(data, 0, 1);
-	}
+		moving(data, 0, 0.015, 1);
 	return (0);
 }
 
-void move_player(t_data *data, float x, float y)
+int un_presskey(int keycode, t_data *data)
 {
-	int c;
-
-	c = 0;
-	//while (data->press == 1 && c < 50)
-	//{
-	make_player(data, 1);
-	data->x += (x / 100);
-	data->y += (y / 100);
-	make_player(data, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-		//c++;
-	//}
-}
-int presskey(t_data *data)
-{
-	mlx_hook(data->win, 2, 0L, &un_presskey, data);
-	return (0);
-}
-
-int un_presskey(t_data *data)
-{
-	printf("%d",data->press);
+	if (keycode == 53)
+		exit_mlx(data);
+	if (keycode == 0)//left
+		moving(data, 0.015, 0, 0);
+	else if (keycode == 2)//droit
+		moving(data, -0.015, 0, 0);
+	else if (keycode == 13)//up
+		moving(data, 0, 0.015, 0);
+	else if (keycode == 1)//down
+		moving(data, 0, -0.015, 0);
 	return (0);
 }
 
@@ -82,11 +88,8 @@ int main()
 	make_img(&data);
 	make_player(&data, 0);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
-	//mlx_key_hook(data.win, key_hook, &data);
-	//mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
-	mlx_hook(data.win, 17, 0L, &exit_mlx, &data);
-	mlx_loop_hook(data.mlx, &presskey, &data);
-	//mlx_hook(data.win, 2, 0L, &presskey, &data);
-	//mlx_hook(data.win, 3, 1L << 1, &un_presskey, &data);
+	mlx_hook(data.win, 2, 1L << 0, presskey, &data);
+    mlx_hook(data.win, 3, 1L << 0, un_presskey, &data); 
+	mlx_loop_hook(data.mlx, &move_test, &data);
 	mlx_loop(data.mlx);
 }
