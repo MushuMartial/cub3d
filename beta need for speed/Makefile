@@ -1,5 +1,5 @@
 NAME = cub3D
-SRC = main.c parser.c libft.c utils.c
+SRC = main.c parser.c libft.c utils.c draw.c move.c
 OBJ = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror -g

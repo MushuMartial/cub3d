@@ -6,12 +6,13 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 11:37:38 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/07 14:47:24 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/07 17:06:59 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/* Init Variables */
 void make_map(t_data *data)
 {
 	data->map = malloc(sizeof(char *) * 8);
@@ -30,67 +31,5 @@ void make_map(t_data *data)
 	data->add_y = 0;
 	data->y = 6.45;
 	data->press = 0;
-}
-
-void put_square(t_data *data, int j, int i)
-{
-	int k;
-	int l;
-
-	k = 0;
-	while(k < 100)
-	{
-		l = 0;
-		while(l < 99)
-		{
-			if (k == 99)
-				my_mlx_pixel_put(data, (int)(i * 100) + l, (int)(j * 100) + k, 0x00AAAAAA);
-			else if (data->map[j][i] == '1')
-				my_mlx_pixel_put(data, (int)(i * 100) + l, (int)(j * 100) + k, 0xA0DDDDDD);
-			else
-				my_mlx_pixel_put(data, (int)(i * 100) + l, (int)(j * 100) + k, 0x00000000);
-			l++;
-		}
-		my_mlx_pixel_put(data, (int)(i * 100) + l, (int)(j * 100) + k, 0x00AAAAAA);
-		k++;
-	}
-}
-
-void make_img(t_data *data)
-{
-	int i;
-	int j;
-
-	j = 0;
-	while (j < data->map_h)
-	{
-		i = 0;
-		while (i < data->map_l)
-		{
-			put_square(data, j ,i);
-			i++;
-		}
-		j++;
-	}
-}
-
-void make_player(t_data *data, int color)
-{
-	int i;
-	int j;
-
-	j = 0;
-	while (j < 10)
-	{
-		i = 0;
-		while (i < 10)
-		{
-			if (color == 0)
-				my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x000000FF);
-			else
-				my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x00000000);
-			i++;
-		}
-		j++;
-	}
+	data->direction = 0.003;
 }

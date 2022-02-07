@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/07 14:47:45 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:46:09 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,30 @@ typedef struct s_data {
 	float	add_y;
 	int 	map_l;
 	int		map_h;
+	float	direction;
 	
 	int     press;
 }				t_data;
 
 /* main */
-int un_presskey(int keycode, t_data *data);
-int presskey(int keycode, t_data *data);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void move_player(t_data *data, float x, float y);
 
 /* utils */
 int	exit_mlx(t_data	*data);
 
-/* parser */
-void make_map(t_data *data);
+/* draw */
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void put_square(t_data *data, int j, int i);
 void make_img(t_data *data);
-void make_player(t_data *data, int color);
+void make_player(t_data *data);
+
+/* move */
+int move_player(t_data *data);
+void moving(t_data *data, float x, float y, int pres);
+int presskey(int keycode, t_data *data);
+int un_presskey(int keycode, t_data *data);
+
+/* parser */
+void make_map(t_data *data);
 
 /* libft */
 char	*ft_strdup(const char *s1);
