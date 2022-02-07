@@ -6,12 +6,13 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 15:46:53 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/03 15:47:35 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:32:42 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/* exit */
 int	exit_mlx(t_data	*data)
 {
 	mlx_destroy_window(data->mlx, data->win);
