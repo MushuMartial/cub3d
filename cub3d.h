@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/07 16:46:09 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/08 12:22:27 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,15 @@
 # include <fcntl.h>
 # include <math.h>
 # include "mlx.h"
+# define PI 3.1415926535
 
-/*typedef struct s_img {
-	void	*img;
-	char	*addr;
-	void	*img_h;
-	char	*addr_h;
-	void	*img_f;
-	char	*addr_f;
-	void	*img_e;
-	char	*addr_e;
-	char	*path;
-	int		size;
-}				t_img;
+# define mapWidth 8
+# define mapHeight 8
+# define screenWidth 800
+# define screenHeight 800
 
-typedef struct s_data {
-	void	*mlx;
-	void	*win;
-	char	**map;
-	int		len;
-	int		height;
-	int		x;
-	int		y;
-	int		count_c;
-	int		walk;
-}				t_data;*/
+/* define ROTATE_LEFT 123
+define ROTATE_RIGHT 124*/
 
 typedef struct s_data {
     void	*mlx;
@@ -57,15 +41,23 @@ typedef struct s_data {
 	int		endian;
 	
 	char 	**map;
-	float	x;
+	float	x; //pos player
 	float	add_x;
-	float 	y;
+	float 	y; //pos player
 	float	add_y;
 	int 	map_l;
 	int		map_h;
 	float	direction;
 	
 	int     press;
+	
+	float dirY;//direction of the player
+	float dirX;
+	float planeX; //camera plane of the player
+	float planeY;
+	float posX; //x and y start position
+	float posY;
+	
 }				t_data;
 
 /* main */

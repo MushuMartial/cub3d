@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/07 17:07:08 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/08 13:45:26 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,24 @@ void make_player(t_data *data)
 {
 	float i;
 	float j;
-
+	//char 
 	j = 0;
 	while (j < 10)
 	{
 		i = 0;
 		while (i < 10)
 		{
-			my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x000000FF);
+			my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 14443520);
 			i++;
 		}
 		j++;
 	}
 	i = 5;
 	j = 5;
-	while (i < 20)
+	/*while (i < 20)
 	{
 		my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 0x0000FF00);
 		i += data->direction;
 		j += data->direction;
-	}
+	}*/
 }
