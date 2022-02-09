@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/08 12:22:27 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/09 16:30:54 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 # include "mlx.h"
 # define PI 3.1415926535
 
-# define mapWidth 8
-# define mapHeight 8
-# define screenWidth 800
-# define screenHeight 800
+# define MapWidth 8
+# define MapHeight 8
+# define ScreenWidth 800
+# define ScreenHeight 800
 
-/* define ROTATE_LEFT 123
-define ROTATE_RIGHT 124*/
+/* define LEFT 123
+define RIGHT 124*/
 
 typedef struct s_data {
     void	*mlx;
@@ -51,19 +51,29 @@ typedef struct s_data {
 	
 	int     press;
 	
-	float dirY;//direction of the player
-	float dirX;
-	float planeX; //camera plane of the player
-	float planeY;
-	float posX; //x and y start position
-	float posY;
-	
 }				t_data;
 
+typedef struct s_ray {
+	float start_x;
+	float start_y;
+	float dir_x;
+	float dir_y;
+	float ustep_x;
+	float ustep_y;
+	float map_x;
+	float map_y;
+	float lenx;
+	float leny;
+	float vStep_x;
+	float vStep_y;
+} t_ray;
 /* main */
 
 /* utils */
 int	exit_mlx(t_data	*data);
+
+/* raycast */
+float init_raycast(t_ray *ray, t_data *data);
 
 /* draw */
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
