@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/07 16:46:09 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:59:18 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,15 @@
 # include <fcntl.h>
 # include <math.h>
 # include "mlx.h"
+# define PI 3.1415926535
 
-/*typedef struct s_img {
-	void	*img;
-	char	*addr;
-	void	*img_h;
-	char	*addr_h;
-	void	*img_f;
-	char	*addr_f;
-	void	*img_e;
-	char	*addr_e;
-	char	*path;
-	int		size;
-}				t_img;
+# define MapWidth 8
+# define MapHeight 8
+# define ScreenWidth 800
+# define ScreenHeight 800
 
-typedef struct s_data {
-	void	*mlx;
-	void	*win;
-	char	**map;
-	int		len;
-	int		height;
-	int		x;
-	int		y;
-	int		count_c;
-	int		walk;
-}				t_data;*/
+/* define LEFT 123
+define RIGHT 124*/
 
 typedef struct s_data {
     void	*mlx;
@@ -57,33 +41,59 @@ typedef struct s_data {
 	int		endian;
 	
 	char 	**map;
-	float	x;
+	float	x; //pos player
 	float	add_x;
-	float 	y;
+	float 	y; //pos player
 	float	add_y;
 	int 	map_l;
 	int		map_h;
 	float	direction;
 	
 	int     press;
+	int		press_turn;
+	
 }				t_data;
 
+typedef struct s_ray {
+	float start_x;
+	float start_y;
+	float dir_x;
+	float dir_y;
+	float ustep_x;
+	float ustep_y;
+	float map_x;
+	float map_y;
+	float lenx;
+	float leny;
+	float vStep_x;
+	float vStep_y;
+	float intersec_x;
+	float intersec_y;
+} t_ray;
 /* main */
 
 /* utils */
 int	exit_mlx(t_data	*data);
+
+/* raycast */
+float init_raycast(t_ray *ray, t_data *data);
 
 /* draw */
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void put_square(t_data *data, int j, int i);
 void make_img(t_data *data);
 void make_player(t_data *data);
+void draw_ray(t_data *data, t_ray *ray);
+void    draw_line(t_data *data, int x0, int y0, int x1, int y1);
+void    draw_line2(t_data *data, int x0, int y0, int x1, int y1);
+void    draw_line3(t_data *data, int x0, int y0, int x1, int y1);
 
 /* move */
 int move_player(t_data *data);
 void moving(t_data *data, float x, float y, int pres);
 int presskey(int keycode, t_data *data);
 int un_presskey(int keycode, t_data *data);
+void turning(t_data *data, int pres, int sens);
 
 /* parser */
 void make_map(t_data *data);
