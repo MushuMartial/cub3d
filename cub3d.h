@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/09 16:30:54 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:59:18 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_data {
 	float	direction;
 	
 	int     press;
+	int		press_turn;
 	
 }				t_data;
 
@@ -66,6 +67,8 @@ typedef struct s_ray {
 	float leny;
 	float vStep_x;
 	float vStep_y;
+	float intersec_x;
+	float intersec_y;
 } t_ray;
 /* main */
 
@@ -80,12 +83,17 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void put_square(t_data *data, int j, int i);
 void make_img(t_data *data);
 void make_player(t_data *data);
+void draw_ray(t_data *data, t_ray *ray);
+void    draw_line(t_data *data, int x0, int y0, int x1, int y1);
+void    draw_line2(t_data *data, int x0, int y0, int x1, int y1);
+void    draw_line3(t_data *data, int x0, int y0, int x1, int y1);
 
 /* move */
 int move_player(t_data *data);
 void moving(t_data *data, float x, float y, int pres);
 int presskey(int keycode, t_data *data);
 int un_presskey(int keycode, t_data *data);
+void turning(t_data *data, int pres, int sens);
 
 /* parser */
 void make_map(t_data *data);

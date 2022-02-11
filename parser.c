@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 11:37:38 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/09 16:38:52 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:19:59 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void make_map(t_data *data)
 	data->add_x = 0;
 	data->add_y = 0;
 	data->press = 0;
-	data->direction = 0.003;
+    data->press_turn = 0;
+	data->direction = 0.000;
     
 	//data->posX = 3.5, data->posY = 6.5;  //x and y start position
     //data->dirX = -1, data->dirY = 0; //initial direction vector
     //data->planeX = 0, data->planeY = 0.66; //the 2d raycaster version of camera plane
-
 	//data->time = 0; //time of current frame
     //data->oldTime = 0; //time of previous frame
 }

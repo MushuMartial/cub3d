@@ -2,7 +2,7 @@ NAME = cub3D
 SRC = main.c parser.c libft.c utils.c draw.c move.c raycast.c
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 LINKS = -lmlx -framework OpenGL -framework AppKit 
 CC = gcc
 RM = rm -rf

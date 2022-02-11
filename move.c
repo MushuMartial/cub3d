@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:27:19 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/09 14:14:47 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:42:40 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Move player */
 int move_player(t_data *data)
 {
-	if (data->press == 1)
+	if (data->press == 1 || data->press_turn == 1)
 	{
 		make_img(data);
 		data->x += data->add_x;
@@ -39,6 +39,24 @@ void moving(t_data *data, float x, float y, int pres)
 		data->add_y += y;
 }
 
+/* turn sides */
+void turning(t_data *data, int pres, int sens)
+{
+	data->press_turn = pres;
+	if (data->press_turn == 1 && sens == 1)
+	{
+		if (data->direction == 360)
+			data->direction = 0;
+		data->direction += 3;
+	}
+	else if (data->press_turn == 1 && sens == 0)
+	{
+		if (data->direction == 0)
+			data->direction = 360;
+		data->direction -= 3;
+	}
+}
+
 /* Check presskey */
 int presskey(int keycode, t_data *data)
 {
@@ -52,6 +70,10 @@ int presskey(int keycode, t_data *data)
 		moving(data, 0, -0.015, 1);
 	else if (keycode == 1)//down
 		moving(data, 0, 0.015, 1);
+	else if (keycode == 124)//left g
+		turning(data, 1, 1);
+	else if (keycode == 123)//right
+		turning(data, 1, 0);
 	return (0);
 }
 
@@ -68,5 +90,9 @@ int un_presskey(int keycode, t_data *data)
 		moving(data, 0, 0.015, 0);
 	else if (keycode == 1)//down
 		moving(data, 0, -0.015, 0);
+	else if (keycode == 124)//left g
+		turning(data, 0, 0);
+	else if (keycode == 123)//right
+		turning(data, 0, 0);
 	return (0);
 }
