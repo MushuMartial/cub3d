@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 13:26:09 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/13 12:30:28 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/14 11:12:17 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ float init_raycast(t_ray *ray, t_data *data)
 {
     ray->start_x = data->x;
     ray->start_y = data->y;
-    ray->dir_x = sin(data->direction * (PI / 180));//* (PI / 180)
-	ray->dir_y = cos(data->direction * (PI / 180));
-    ray->ustep_x = sqrt(1 + ((ray->dir_y / ray->dir_x) * (ray->dir_y / ray->dir_x)));
-    ray->ustep_y = sqrt(1 + ((ray->dir_x / ray->dir_y) * (ray->dir_x / ray->dir_y)));
+    ray->dir_x = sin(data->direction * (0.01745329251));//* (PI / 180)
+	ray->dir_y = cos(data->direction * (0.01745329251));
+    ray->ustep_x = sqrt(1.0 + pow(ray->dir_y / ray->dir_x, 2));
+    ray->ustep_y = sqrt(1.0 + pow(ray->dir_x / ray->dir_y, 2));
     ray->map_x = (int)data->x;
     ray->map_y = (int)data->y;
 
@@ -64,7 +64,7 @@ float init_raycast(t_ray *ray, t_data *data)
             ray->leny += ray->ustep_y;
         }
         //check collision
-        if (ray->map_x >= 0 && ray->map_x < data->x && ray->map_y >= 0 && ray->map_y < data->y)
+        if (ray->map_x >= 0 && ray->map_x < 8 && ray->map_y >= 0 && ray->map_y < 8)
         {
             if (data->map[(int)(ray->map_y)][(int)(ray->map_x)] == '1')
             {
@@ -76,10 +76,10 @@ float init_raycast(t_ray *ray, t_data *data)
         {
             ray->intersec_x = ray->start_x + (ray->dir_x * fdistance);
             ray->intersec_y = ray->start_y + (ray->dir_y * fdistance);
-            //printf("x = %f\n",ray->intersec_x);
-            //printf("y = %f\n",ray->intersec_y);
             return(sqrt (pow(ray->intersec_x,2) + pow(ray->intersec_y,2)) );
         }
     }
-    return(0);
+    ray->intersec_x = ray->start_x + (ray->dir_x * 1);
+    ray->intersec_y = ray->start_y + (ray->dir_y * 1);
+    return(sqrt (pow(ray->intersec_x,2) + pow(ray->intersec_y,2)));
 }

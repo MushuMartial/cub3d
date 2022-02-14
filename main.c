@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:27 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/11 17:20:06 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/14 11:18:28 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ int main()
 	mlx_hook(data.win, 17, 1L << 0, &exit_mlx, &data);
 	mlx_loop_hook(data.mlx, &move_player, &data);
 	mlx_loop(data.mlx);
-	
 }

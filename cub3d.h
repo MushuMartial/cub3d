@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/13 12:01:55 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/14 14:53:10 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void make_img(t_data *data);
 void make_player(t_data *data);
 void draw_ray(t_data *data, t_ray *ray);
 void    draw_line(t_data *data, int x0, int y0, int x1, int y1);
-void    draw_line2(t_data *data, float x0, float y0, float x1, float y1);
-void    draw_line3(t_data *data, int x0, int y0, int x1, int y1);
+void draw_rays(t_data *data);
 
 /* move */
 int move_player(t_data *data);
