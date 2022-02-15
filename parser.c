@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 11:37:38 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/11 17:19:59 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:52:36 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void make_map(t_data *data)
 	data->add_y = 0;
 	data->press = 0;
     data->press_turn = 0;
-	data->direction = 0.000;
+	data->direction = 360.000;
     
 	//data->posX = 3.5, data->posY = 6.5;  //x and y start position
     //data->dirX = -1, data->dirY = 0; //initial direction vector

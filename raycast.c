@@ -6,13 +6,13 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 13:26:09 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/14 11:12:17 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/15 14:31:16 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float init_raycast(t_ray *ray, t_data *data)
+void init_raycast(t_ray *ray, t_data *data)
 {
     ray->start_x = data->x;
     ray->start_y = data->y;
@@ -76,10 +76,12 @@ float init_raycast(t_ray *ray, t_data *data)
         {
             ray->intersec_x = ray->start_x + (ray->dir_x * fdistance);
             ray->intersec_y = ray->start_y + (ray->dir_y * fdistance);
-            return(sqrt (pow(ray->intersec_x,2) + pow(ray->intersec_y,2)) );
+            ray->len = sqrt(pow(ray->intersec_x - (data->x + 0.05),2) + pow(ray->intersec_y - (data->y + 0.05),2));
+            return ;
         }
     }
     ray->intersec_x = ray->start_x + (ray->dir_x * 1);
     ray->intersec_y = ray->start_y + (ray->dir_y * 1);
-    return(sqrt (pow(ray->intersec_x,2) + pow(ray->intersec_y,2)));
+    ray->len = sqrt(pow(ray->intersec_x - (data->x + 0.05),2) + pow(ray->intersec_y - (data->y + 0.05),2));
+    return ;
 }

@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/14 14:53:06 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:34:40 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,46 +67,77 @@ void make_img(t_data *data)
 	}
 }
 
-/* Draw Player */
-void make_player(t_data *data)
+void draw_black(t_data *data)
 {
-	float i;
-	float j;
-	
+    int i;
+	int j;
+
 	j = 0;
-	while (j < 10)
+	while (j < 800)
 	{
 		i = 0;
-		while (i < 10)
+		while (i < 800)
 		{
-			my_mlx_pixel_put(data, (int)(data->x * 100) + i , (int)(data->y * 100) + j, 14443520);
+			my_mlx_pixel_put(data, i, j, 0x00FFFFFF);
 			i++;
 		}
 		j++;
 	}
-    draw_rays(data);
 }
+
+
+void draw_verticale(t_ray *ray, t_data *data, int x)
+{
+    float wallheight = (800.0 / (ray->len * 10));
+    printf("wall = %f\n", wallheight);
+    float i = 400.0 - (wallheight / 2.0);
+    float j = 400.0 + (wallheight / 2.0); //+400
+    printf("i = %f & j = %f\n",i,j);
+    draw_line2(data, x, 0, x, (int)(i));
+    if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
+    {
+        if (data->map[(int)(ray->intersec_x + 1)][(int)(ray->intersec_y)] == '1')//east vert
+            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
+        else if (data->map[(int)(ray->intersec_x - 1)][(int)(ray->intersec_y)] == '1')//west
+            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
+        else if (data->map[(int)(ray->intersec_x)][(int)(ray->intersec_y - 1)] == '1')//north
+            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
+        else if (data->map[(int)(ray->intersec_x)][(int)(ray->intersec_y)] == '1')//south
+            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
+    }
+}
+
+void make_player(t_data *data)
+{
+    draw_black(data);
+    draw_rays(data);
+    printf("direction = %f\n",data->direction);
+}
+
 
 void draw_rays(t_data *data)
 {
     float i;
+    float add;
     t_ray ray;
     
     i = 0;
+    add = 60.0 / 800.0;
     if (data->direction <= 29)
         data->direction = data->direction + 360;
     data->direction -= 30;
-    while(i < 60)
+    while(i < 800)
     {
         init_raycast(&ray, data);
-	    draw_line(data, (data->x * 100) + 5, (data->y * 100) + 5, (ray.intersec_x) * 100, (ray.intersec_y) * 100);//vert
-        if (data->direction == 360)
-            data->direction = 0;
-        data->direction += 5;
-        i += 5;
+        draw_verticale(&ray, data, i);
+        if (data->direction == 0)
+            data->direction = 360;
+        data->direction += add;
+        i++;
     }
     data->direction -= 30;
 }
+
 
 void    draw_line(t_data *data, int x0, int y0, int x1, int y1)
 {
@@ -149,6 +180,128 @@ void    draw_line(t_data *data, int x0, int y0, int x1, int y1)
     }
 }
 
+void    draw_line2(t_data *data, int x0, int y0, int x1, int y1)
+{
+    int    dx;
+    int    dy;
+    int    sx;
+    int    sy;
+    int    err;
+    int    e2;
+
+    dx = abs (x1 - x0);
+    dy = -abs (y1 - y0);
+    if (x0 < x1)
+        sx = 1;
+    else
+        sx = -1;
+    if (y0 < y1)
+        sy = 1;
+    else
+        sy = -1;
+    err = dx + dy;
+    while (1)
+    {
+        my_mlx_pixel_put(data, x0, y0, 0x00AAAAAA);//mauve 0x006A0DAD
+        e2 = 2 * err;
+        if (e2 >= dy)
+        {
+            if (x0 == x1)
+                break ;
+            err += dy;
+            x0 += sx;
+        }
+        if (e2 <= dx)
+        {
+            if (y0 == y1)
+                break ;
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+void    draw_line3(t_data *data, int x0, int y0, int x1, int y1)
+{
+    int    dx;
+    int    dy;
+    int    sx;
+    int    sy;
+    int    err;
+    int    e2;
+
+    dx = abs (x1 - x0);
+    dy = -abs (y1 - y0);
+    if (x0 < x1)
+        sx = 1;
+    else
+        sx = -1;
+    if (y0 < y1)
+        sy = 1;
+    else
+        sy = -1;
+    err = dx + dy;
+    while (1)
+    {
+        my_mlx_pixel_put(data, x0, y0, 0x00AAAAAA);//mauve 0x006A0DAD
+        e2 = 2 * err;
+        if (e2 >= dy)
+        {
+            if (x0 == x1)
+                break ;
+            err += dy;
+            x0 += sx;
+        }
+        if (e2 <= dx)
+        {
+            if (y0 == y1)
+                break ;
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+void    draw_line4(t_data *data, int x0, int y0, int x1, int y1)
+{
+    int    dx;
+    int    dy;
+    int    sx;
+    int    sy;
+    int    err;
+    int    e2;
+
+    dx = abs (x1 - x0);
+    dy = -abs (y1 - y0);
+    if (x0 < x1)
+        sx = 1;
+    else
+        sx = -1;
+    if (y0 < y1)
+        sy = 1;
+    else
+        sy = -1;
+    err = dx + dy;
+    while (1)
+    {
+        my_mlx_pixel_put(data, x0, y0, 0x00AAAAAA);//mauve 0x006A0DAD
+        e2 = 2 * err;
+        if (e2 >= dy)
+        {
+            if (x0 == x1)
+                break ;
+            err += dy;
+            x0 += sx;
+        }
+        if (e2 <= dx)
+        {
+            if (y0 == y1)
+                break ;
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
 /* int	get_img_pixel(t_img *img, int x, int y)
 {
 	char	*ptr;

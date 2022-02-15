@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/14 14:53:10 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:14:47 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_ray {
 	float vStep_y;
 	float intersec_x;
 	float intersec_y;
+	float len;
 } t_ray;
 /* main */
 
@@ -76,16 +77,20 @@ typedef struct s_ray {
 int	exit_mlx(t_data	*data);
 
 /* raycast */
-float init_raycast(t_ray *ray, t_data *data);
+void init_raycast(t_ray *ray, t_data *data);
 
 /* draw */
+void draw_verticale(t_ray *ray, t_data *data, int x);
+void draw_black(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void put_square(t_data *data, int j, int i);
 void make_img(t_data *data);
 void make_player(t_data *data);
 void draw_ray(t_data *data, t_ray *ray);
+void    draw_line2(t_data *data, int x0, int y0, int x1, int y1);
 void    draw_line(t_data *data, int x0, int y0, int x1, int y1);
 void draw_rays(t_data *data);
+
 
 /* move */
 int move_player(t_data *data);
