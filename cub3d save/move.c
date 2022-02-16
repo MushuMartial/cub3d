@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:27:19 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/15 09:37:08 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:55:53 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void turning(t_data *data, int pres, int sens)
 	data->press_turn = pres;
 	if (data->press_turn == 1 && sens == 1)
 	{
-		if (data->direction == 360)
-			data->direction = 0;
+		if (data->direction == 0)
+			data->direction = 360;
 		data->direction += 3;
 	}
 	else if (data->press_turn == 1 && sens == 0)
@@ -70,9 +70,9 @@ int presskey(int keycode, t_data *data)
 		moving(data, 0, -0.015, 1);
 	else if (keycode == 1)//down
 		moving(data, 0, 0.015, 1);
-	else if (keycode == 124)//left g
+	else if (keycode == 123)//left g
 		turning(data, 1, 1);
-	else if (keycode == 123)//right
+	else if (keycode == 124)//right
 		turning(data, 1, 0);
 	return (0);
 }
@@ -90,9 +90,9 @@ int un_presskey(int keycode, t_data *data)
 		moving(data, 0, 0.015, 0);
 	else if (keycode == 1)//down
 		moving(data, 0, -0.015, 0);
-	else if (keycode == 124)//left g
+	else if (keycode == 123)//left g
 		turning(data, 0, 0);
-	else if (keycode == 123)//right
+	else if (keycode == 124)//right
 		turning(data, 0, 0);
 	return (0);
 }

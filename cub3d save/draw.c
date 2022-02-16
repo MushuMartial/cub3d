@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/14 14:53:06 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:31:03 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void make_img(t_data *data)
 	}
 }
 
-/* Draw Player */
 void make_player(t_data *data)
 {
 	float i;
@@ -85,27 +84,21 @@ void make_player(t_data *data)
 		j++;
 	}
     draw_rays(data);
+    printf("direcetion = %f\n",data->direction);
 }
 
 void draw_rays(t_data *data)
 {
     float i;
+    float add;
     t_ray ray;
     
     i = 0;
-    if (data->direction <= 29)
-        data->direction = data->direction + 360;
-    data->direction -= 30;
-    while(i < 60)
-    {
-        init_raycast(&ray, data);
-	    draw_line(data, (data->x * 100) + 5, (data->y * 100) + 5, (ray.intersec_x) * 100, (ray.intersec_y) * 100);//vert
-        if (data->direction == 360)
-            data->direction = 0;
-        data->direction += 5;
-        i += 5;
-    }
-    data->direction -= 30;
+    add = 60.0 / 800.0;
+    init_raycast(&ray, data);
+    printf("ray = %f\n",ray.len);
+    //if(wall write NO SU OUESt WEST)
+	draw_line(data, (data->x * 100) + 5, (data->y * 100) + 5, (ray.intersec_x) * 100, (ray.intersec_y) * 100);//vert
 }
 
 void    draw_line(t_data *data, int x0, int y0, int x1, int y1)
