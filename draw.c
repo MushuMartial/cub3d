@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/15 16:34:40 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:28:58 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,24 @@ void draw_black(t_data *data)
 }
 
 
-void draw_verticale(t_ray *ray, t_data *data, int x)
+
+void draw_wall(t_ray *ray, t_data *data, int x)
 {
-    float wallheight = (800.0 / (ray->len * 10));
+    float z = fabs(ray->len * (cos(abs((int)(data->direction - (int)data->dir_ray)))));
+    printf("z = %f\n",z);
+    float wallheight = ((800.0) / (ray->len * 10));
     printf("wall = %f\n", wallheight);
     float i = 400.0 - (wallheight / 2.0);
-    float j = 400.0 + (wallheight / 2.0); //+400
-    printf("i = %f & j = %f\n",i,j);
-    draw_line2(data, x, 0, x, (int)(i));
+    float j = 400.0 + (wallheight / 2.0);
+    printf("i = %f & j = %f\n", i, j);
+    draw_line2(data, x, 0, x, (int)(i));//sky
     if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
-    {
-        if (data->map[(int)(ray->intersec_x + 1)][(int)(ray->intersec_y)] == '1')//east vert
-            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
-        else if (data->map[(int)(ray->intersec_x - 1)][(int)(ray->intersec_y)] == '1')//west
-            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
-        else if (data->map[(int)(ray->intersec_x)][(int)(ray->intersec_y - 1)] == '1')//north
-            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
-        else if (data->map[(int)(ray->intersec_x)][(int)(ray->intersec_y)] == '1')//south
-            draw_line(data, x ,(int)(i), x, (int)(j));//attention segfault*/
-    }
+       draw_line(data, x, (int)(i), x, (int)(j));
 }
+
+/*
+var wallHeight = this.height * height / z;
+}*/
 
 void make_player(t_data *data)
 {
@@ -114,29 +112,42 @@ void make_player(t_data *data)
     printf("direction = %f\n",data->direction);
 }
 
-
 void draw_rays(t_data *data)
 {
     float i;
     float add;
     t_ray ray;
     
+    data->dir_ray = data->direction;
     i = 0;
     add = 60.0 / 800.0;
-    if (data->direction <= 29)
-        data->direction = data->direction + 360;
-    data->direction -= 30;
+    if (data->dir_ray <= 29)
+        data->dir_ray = data->dir_ray+ 360;
+    data->dir_ray -= 30;
     while(i < 800)
     {
         init_raycast(&ray, data);
-        draw_verticale(&ray, data, i);
-        if (data->direction == 0)
-            data->direction = 360;
-        data->direction += add;
+        draw_wall(&ray, data, i);
+        if (data->dir_ray == 0)
+            data->dir_ray = 360;
+        data->dir_ray+= add;
         i++;
     }
-    data->direction -= 30;
+    data->dir_ray-= 30;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void    draw_line(t_data *data, int x0, int y0, int x1, int y1)
@@ -302,13 +313,3 @@ void    draw_line4(t_data *data, int x0, int y0, int x1, int y1)
         }
     }
 }
-/* int	get_img_pixel(t_img *img, int x, int y)
-{
-	char	*ptr;
-
-	ptr = img->addr + (y * img->ll + x * (img->bpp / 8));
-	return (*((int *)ptr));
-}
-300 = hauteurdelafenetre/distance;
-(10, 55) (10 / 300 * 800, 55 / 300 * 800)
-*/

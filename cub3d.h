@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/15 16:14:47 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:19:41 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ typedef struct s_data {
 	int		len_pix;
 	int		endian;
 	
+	void	*img_xpm;
+	int		xpm_height;
+	int		xpm_width;
+
 	char 	**map;
 	float	x; //pos player
 	float	add_x;
@@ -48,6 +52,7 @@ typedef struct s_data {
 	int 	map_l;
 	int		map_h;
 	float	direction;
+	float	dir_ray;
 	
 	int     press;
 	int		press_turn;
@@ -80,7 +85,7 @@ int	exit_mlx(t_data	*data);
 void init_raycast(t_ray *ray, t_data *data);
 
 /* draw */
-void draw_verticale(t_ray *ray, t_data *data, int x);
+void draw_wall(t_ray *ray, t_data *data, int x);
 void draw_black(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void put_square(t_data *data, int j, int i);

@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 13:26:09 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/15 14:31:16 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:40:02 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void init_raycast(t_ray *ray, t_data *data)
 {
     ray->start_x = data->x;
     ray->start_y = data->y;
-    ray->dir_x = sin(data->direction * (0.01745329251));//* (PI / 180)
-	ray->dir_y = cos(data->direction * (0.01745329251));
+    ray->dir_x = sin(data->dir_ray * (0.01745329251));//* (PI / 180)
+	ray->dir_y = cos(data->dir_ray * (0.01745329251));
     ray->ustep_x = sqrt(1.0 + pow(ray->dir_y / ray->dir_x, 2));
     ray->ustep_y = sqrt(1.0 + pow(ray->dir_x / ray->dir_y, 2));
     ray->map_x = (int)data->x;
