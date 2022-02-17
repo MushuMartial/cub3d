@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/16 15:28:58 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:37:02 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,39 @@ void draw_black(t_data *data)
 
 void draw_wall(t_ray *ray, t_data *data, int x)
 {
-    float z = fabs(ray->len * (cos(abs((int)(data->direction - (int)data->dir_ray)))));
-    printf("z = %f\n",z);
-    float wallheight = ((800.0) / (ray->len * 10));
-    printf("wall = %f\n", wallheight);
+    float z = (cos((data->direction - data->dir_ray)  * 0.01745329251));
+    //printf("angle = %f\n",data->direction - data->dir_ray);
+    //printf("ray = %f\n",ray->len);
+    float wallheight = ((800.0) / ((ray->len * z)));
+    //printf("wall = %f\n", wallheight);
     float i = 400.0 - (wallheight / 2.0);
     float j = 400.0 + (wallheight / 2.0);
-    printf("i = %f & j = %f\n", i, j);
-    draw_line2(data, x, 0, x, (int)(i));//sky
+    //printf("i = %f & j = %f\n", i, j);
+    draw_line2(data, x, 0, x, (i));//sky
     if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
-       draw_line(data, x, (int)(i), x, (int)(j));
+    {
+        if (ray->fish == 1 && cos((data->direction - data->dir_ray) * (0.01745329251)) > 0.0)
+        {
+            printf("angle = %f\n",cos((data->direction - data->dir_ray) * (0.01745329251)));
+            //printf("angle = %d\n",(((int)(data->direction - (int)data->dir_ray))));
+            draw_line(data, x, (i), x, (j), 0x0000FF00);//ouest
+        }
+        else if (ray->fish == 1)
+        {
+            draw_line(data, x, (i), x, (j), 0x000000FF);//est
+        }
+        else if (sin( (data->direction - data->dir_ray)  * (0.01745329251)) > 0.0)
+        {
+            draw_line(data, x, (i), x, (j), 0x00FF0000);//nord
+        }
+        else
+        {
+            draw_line(data, x, (i), x, (j), 0x00FFFFFF);//nord*/
+        }
+    }
 }
 
-/*
-var wallHeight = this.height * height / z;
-}*/
+
 
 void make_player(t_data *data)
 {
@@ -126,6 +144,7 @@ void draw_rays(t_data *data)
     data->dir_ray -= 30;
     while(i < 800)
     {
+        //printf("dir ray = %f\n", data->dir_ray);
         init_raycast(&ray, data);
         draw_wall(&ray, data, i);
         if (data->dir_ray == 0)
@@ -133,7 +152,6 @@ void draw_rays(t_data *data)
         data->dir_ray+= add;
         i++;
     }
-    data->dir_ray-= 30;
 }
 
 
@@ -150,7 +168,7 @@ void draw_rays(t_data *data)
 
 
 
-void    draw_line(t_data *data, int x0, int y0, int x1, int y1)
+void    draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
 {
     int    dx;
     int    dy;
@@ -172,7 +190,7 @@ void    draw_line(t_data *data, int x0, int y0, int x1, int y1)
     err = dx + dy;
     while (1)
     {
-        my_mlx_pixel_put(data, x0, y0, 0x0000FF00);//mauve 0x006A0DAD
+        my_mlx_pixel_put(data, x0, y0, color);//mauve 0x006A0DAD
         e2 = 2 * err;
         if (e2 >= dy)
         {

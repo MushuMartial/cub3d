@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/16 13:19:41 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:41:27 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct s_ray {
 	float intersec_x;
 	float intersec_y;
 	float len;
+	
+	int fish;//fish
 } t_ray;
 /* main */
 
@@ -92,8 +94,8 @@ void put_square(t_data *data, int j, int i);
 void make_img(t_data *data);
 void make_player(t_data *data);
 void draw_ray(t_data *data, t_ray *ray);
+void    draw_line(t_data *data, int x0, int y0, int x1, int y1, int color);
 void    draw_line2(t_data *data, int x0, int y0, int x1, int y1);
-void    draw_line(t_data *data, int x0, int y0, int x1, int y1);
 void draw_rays(t_data *data);
 
 

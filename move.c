@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:27:19 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/15 10:13:27 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:34:30 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void moving(t_data *data, float x, float y, int pres)
 		(void)NULL;
 	else
 		data->press = pres;
+	//x = cos(data->direction * (0.01745329251));
+	//y = sin(data->direction * (0.01745329251));
 	if (data->add_x != x)
 		data->add_x += x;
 	if (data->add_y != y)
