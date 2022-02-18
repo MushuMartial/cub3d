@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/18 16:47:48 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/18 17:40:48 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void draw_black(t_data *data)
 
 void draw_wall(t_ray *ray, t_data *data, int x)
 {
-    float z = (cos((data->direction - data->dir_ray)  * 0.01745329251));
+     float z = (cos((data->direction - data->dir_ray)  * 0.01745329251));
     //printf("angle = %f\n",data->direction - data->dir_ray);
     //printf("ray x = %f\n",ray->intersec_x);
     //printf("ray y = %f\n",ray->intersec_y);
@@ -109,30 +109,30 @@ void draw_wall(t_ray *ray, t_data *data, int x)
         j = 0;
     if (j > 800)
         j = 800;
+    //printf("angle = %f\n",cos((data->dir_ray) * 0.01745329251));
     if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
     {
-        //draw_line(data, x, (int)(i), x, (int)(j), 0x0000FF00);//ouest
-        if (ray->fish == 1 && cos((data->dir_ray) * 0.01745329251)> 0.0)
+        if (ray->fish == 1 && cos((data->direction) * 0.01745329251) > 0.0)//&& cos((data->dir_ray) * 0.01745329251)> 0.0
         {
             draw_line(data, x, (i), x, (j), 0x00000000);//ouest noir
         }
         else if (ray->fish == 1)
         {
-            draw_line(data, x, (i), x, (j), 0x000000AA);//est bleu
+            draw_line(data, x, (i), x, (j), 0x0000AA00);//est vert
         }
-        else if (sin((data->dir_ray) * 0.01745329251) > 0.0)
+        else if (sin((data->direction) * 0.01745329251) > 0.0)//sin((data->dir_ray) * 0.01745329251) > 0.0
         {
             draw_line(data, x, (i), x, (j), 0x00AA0000);//nord rouge
         }
         else
         {
-            draw_line(data, x, (i), x, (j), 0x0000FF00);//nord vert
+            draw_line(data, x, (i), x, (j), 0x000000AA);//nord bleu  0x000000AA
         }
     }
-    else
+    /*else
     {
        draw_line(data, x, 0, x, 799, 0x0000AA00);
-    }
+    }*/
 }
 
 
@@ -143,8 +143,8 @@ void make_player(t_data *data)
     draw_rays(data);
     
     //write(1,"mov\n",4);
-    printf("direction = %f\n", data->direction);
-    printf("direction = %f\n", data->direction);
+    //printf("direction = %f\n", data->direction);
+   // printf("direction = %f\n", data->direction);
 }
 
 void draw_rays(t_data *data)
