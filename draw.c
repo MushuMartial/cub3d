@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/17 17:37:02 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:47:48 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,33 +91,47 @@ void draw_wall(t_ray *ray, t_data *data, int x)
 {
     float z = (cos((data->direction - data->dir_ray)  * 0.01745329251));
     //printf("angle = %f\n",data->direction - data->dir_ray);
+    //printf("ray x = %f\n",ray->intersec_x);
+    //printf("ray y = %f\n",ray->intersec_y);
     //printf("ray = %f\n",ray->len);
     float wallheight = ((800.0) / ((ray->len * z)));
     //printf("wall = %f\n", wallheight);
     float i = 400.0 - (wallheight / 2.0);
     float j = 400.0 + (wallheight / 2.0);
     //printf("i = %f & j = %f\n", i, j);
-    draw_line2(data, x, 0, x, (i));//sky
+    if (i >= 0 && i < 800)
+        draw_line2(data, x, 0, x, (i));//sky
+    if (i < 0)
+        i = 0;
+    if (i > 800)
+        i = 800;
+    if (j < 0)
+        j = 0;
+    if (j > 800)
+        j = 800;
     if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
     {
-        if (ray->fish == 1 && cos((data->direction - data->dir_ray) * (0.01745329251)) > 0.0)
+        //draw_line(data, x, (int)(i), x, (int)(j), 0x0000FF00);//ouest
+        if (ray->fish == 1 && cos((data->dir_ray) * 0.01745329251)> 0.0)
         {
-            printf("angle = %f\n",cos((data->direction - data->dir_ray) * (0.01745329251)));
-            //printf("angle = %d\n",(((int)(data->direction - (int)data->dir_ray))));
-            draw_line(data, x, (i), x, (j), 0x0000FF00);//ouest
+            draw_line(data, x, (i), x, (j), 0x00000000);//ouest noir
         }
         else if (ray->fish == 1)
         {
-            draw_line(data, x, (i), x, (j), 0x000000FF);//est
+            draw_line(data, x, (i), x, (j), 0x000000AA);//est bleu
         }
-        else if (sin( (data->direction - data->dir_ray)  * (0.01745329251)) > 0.0)
+        else if (sin((data->dir_ray) * 0.01745329251) > 0.0)
         {
-            draw_line(data, x, (i), x, (j), 0x00FF0000);//nord
+            draw_line(data, x, (i), x, (j), 0x00AA0000);//nord rouge
         }
         else
         {
-            draw_line(data, x, (i), x, (j), 0x00FFFFFF);//nord*/
+            draw_line(data, x, (i), x, (j), 0x0000FF00);//nord vert
         }
+    }
+    else
+    {
+       draw_line(data, x, 0, x, 799, 0x0000AA00);
     }
 }
 
@@ -127,7 +141,10 @@ void make_player(t_data *data)
 {
     draw_black(data);
     draw_rays(data);
-    printf("direction = %f\n",data->direction);
+    
+    //write(1,"mov\n",4);
+    printf("direction = %f\n", data->direction);
+    printf("direction = %f\n", data->direction);
 }
 
 void draw_rays(t_data *data)
@@ -140,33 +157,17 @@ void draw_rays(t_data *data)
     i = 0;
     add = 60.0 / 800.0;
     if (data->dir_ray <= 29)
-        data->dir_ray = data->dir_ray+ 360;
+        data->dir_ray = data->dir_ray + 360;
     data->dir_ray -= 30;
     while(i < 800)
     {
         //printf("dir ray = %f\n", data->dir_ray);
         init_raycast(&ray, data);
         draw_wall(&ray, data, i);
-        if (data->dir_ray == 0)
-            data->dir_ray = 360;
         data->dir_ray+= add;
         i++;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void    draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
 {

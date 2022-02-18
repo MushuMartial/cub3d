@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 13:26:09 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/17 17:00:39 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/18 13:31:56 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void init_raycast(t_ray *ray, t_data *data)
     ray->ustep_y = sqrt(1.0 + pow(ray->dir_x / ray->dir_y, 2));
     ray->map_x = (int)(data->x + 0.05);
     ray->map_y = (int)(data->y + 0.05);
+    ray->fish = 0;
 
     // connaitre la direction et taille   
     if (ray->dir_x < 0) //ray to the left x dimiune else x augmente
