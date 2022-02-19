@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/18 17:40:48 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/19 15:33:55 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,12 @@ void draw_black(t_data *data)
 
 void draw_wall(t_ray *ray, t_data *data, int x)
 {
-     float z = (cos((data->direction - data->dir_ray)  * 0.01745329251));
-    //printf("angle = %f\n",data->direction - data->dir_ray);
-    //printf("ray x = %f\n",ray->intersec_x);
-    //printf("ray y = %f\n",ray->intersec_y);
-    //printf("ray = %f\n",ray->len);
+    float z = (cos((data->direction - data->dir_ray)  * 0.01745329251));
     float wallheight = ((800.0) / ((ray->len * z)));
-    //printf("wall = %f\n", wallheight);
     float i = 400.0 - (wallheight / 2.0);
     float j = 400.0 + (wallheight / 2.0);
-    //printf("i = %f & j = %f\n", i, j);
     if (i >= 0 && i < 800)
-        draw_line2(data, x, 0, x, (i));//sky
+        draw_line(data, x, 0, x, (i),0x00AAAAAA);//sky gris
     if (i < 0)
         i = 0;
     if (i > 800)
@@ -109,18 +103,19 @@ void draw_wall(t_ray *ray, t_data *data, int x)
         j = 0;
     if (j > 800)
         j = 800;
-    //printf("angle = %f\n",cos((data->dir_ray) * 0.01745329251));
     if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
     {
-        if (ray->fish == 1 && cos((data->direction) * 0.01745329251) > 0.0)//&& cos((data->dir_ray) * 0.01745329251)> 0.0
+        if (ray->fish == 1 && cos((data->dir_ray + 90.0) * 0.01745329251) > 0.0)//&& cos((data->dir_ray) * 0.01745329251)> 0.0
         {
+            //printf("angle = %f\n",cos(data->dir_ray * 0.01745329251));
             draw_line(data, x, (i), x, (j), 0x00000000);//ouest noir
         }
         else if (ray->fish == 1)
         {
+            //printf("angle = %f\n",cos((data->dir_ray + 90.0)* 0.01745329251));
             draw_line(data, x, (i), x, (j), 0x0000AA00);//est vert
         }
-        else if (sin((data->direction) * 0.01745329251) > 0.0)//sin((data->dir_ray) * 0.01745329251) > 0.0
+        else if (sin((data->dir_ray + 90.0) * 0.01745329251) > 0.0)//sin((data->dir_ray) * 0.01745329251) > 0.0
         {
             draw_line(data, x, (i), x, (j), 0x00AA0000);//nord rouge
         }
@@ -210,125 +205,3 @@ void    draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
     }
 }
 
-void    draw_line2(t_data *data, int x0, int y0, int x1, int y1)
-{
-    int    dx;
-    int    dy;
-    int    sx;
-    int    sy;
-    int    err;
-    int    e2;
-
-    dx = abs (x1 - x0);
-    dy = -abs (y1 - y0);
-    if (x0 < x1)
-        sx = 1;
-    else
-        sx = -1;
-    if (y0 < y1)
-        sy = 1;
-    else
-        sy = -1;
-    err = dx + dy;
-    while (1)
-    {
-        my_mlx_pixel_put(data, x0, y0, 0x00AAAAAA);//mauve 0x006A0DAD
-        e2 = 2 * err;
-        if (e2 >= dy)
-        {
-            if (x0 == x1)
-                break ;
-            err += dy;
-            x0 += sx;
-        }
-        if (e2 <= dx)
-        {
-            if (y0 == y1)
-                break ;
-            err += dx;
-            y0 += sy;
-        }
-    }
-}
-
-void    draw_line3(t_data *data, int x0, int y0, int x1, int y1)
-{
-    int    dx;
-    int    dy;
-    int    sx;
-    int    sy;
-    int    err;
-    int    e2;
-
-    dx = abs (x1 - x0);
-    dy = -abs (y1 - y0);
-    if (x0 < x1)
-        sx = 1;
-    else
-        sx = -1;
-    if (y0 < y1)
-        sy = 1;
-    else
-        sy = -1;
-    err = dx + dy;
-    while (1)
-    {
-        my_mlx_pixel_put(data, x0, y0, 0x00AAAAAA);//mauve 0x006A0DAD
-        e2 = 2 * err;
-        if (e2 >= dy)
-        {
-            if (x0 == x1)
-                break ;
-            err += dy;
-            x0 += sx;
-        }
-        if (e2 <= dx)
-        {
-            if (y0 == y1)
-                break ;
-            err += dx;
-            y0 += sy;
-        }
-    }
-}
-
-void    draw_line4(t_data *data, int x0, int y0, int x1, int y1)
-{
-    int    dx;
-    int    dy;
-    int    sx;
-    int    sy;
-    int    err;
-    int    e2;
-
-    dx = abs (x1 - x0);
-    dy = -abs (y1 - y0);
-    if (x0 < x1)
-        sx = 1;
-    else
-        sx = -1;
-    if (y0 < y1)
-        sy = 1;
-    else
-        sy = -1;
-    err = dx + dy;
-    while (1)
-    {
-        my_mlx_pixel_put(data, x0, y0, 0x00AAAAAA);//mauve 0x006A0DAD
-        e2 = 2 * err;
-        if (e2 >= dy)
-        {
-            if (x0 == x1)
-                break ;
-            err += dy;
-            x0 += sx;
-        }
-        if (e2 <= dx)
-        {
-            if (y0 == y1)
-                break ;
-            err += dx;
-            y0 += sy;
-        }
-    }
-}

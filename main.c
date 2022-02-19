@@ -6,11 +6,19 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:27 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/16 10:48:19 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:26:26 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	img_pixel(t_data *data, int x, int y)
+{
+	char	*ptr;
+
+	ptr = data->addr_n + (y * data->ll_n + x * (data->bpp_n / 8));
+	return (*((int *)ptr));
+}
 
 int main()
 {
@@ -22,33 +30,35 @@ int main()
 	data.img = mlx_new_image(data.mlx, 800, 800);
 	data.addr = mlx_get_data_addr(data.img, &data.b_pix, &data.len_pix, &data.endian);
 	
-	//data.img_xpm = mlx_xpm_file_to_image(data.mlx, "./sekiro", xpm_height, );
 
-	make_player(&data);
+	//make_player(&data);
+	//mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
+	data.img_n = mlx_xpm_file_to_image(data.mlx, "./north.xpm", &data.w_n, &data.h_n);
+	data.addr_n = mlx_get_data_addr(data.img_n, &data.bpp_n, &data.ll_n, &data.endian_n);
+	float i = 0;
+	float j = 0;
+	int color = 0;
+	while (j < 600)
+	{
+		i = 0;
+		while (i < 600)
+		{
+			color = img_pix(&data, i * (data.w_n / 800.0), j * (data.h_n / 800));
+			my_mlx_pixel_put(&data, i, j ,color);
+			i++;
+		}
+		j++;
+	}
+	
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_hook(data.win, 2, 1L << 0, presskey, &data);
    	mlx_hook(data.win, 3, 1L << 0, un_presskey, &data); 
 	mlx_hook(data.win, 17, 1L << 0, &exit_mlx, &data);
-	mlx_loop_hook(data.mlx, &move_player, &data);
+	//mlx_loop_hook(data.mlx, &move_player, &data);
 	mlx_loop(data.mlx);
 }
 
-/* int	get_img_pixel(t_img *img, int x, int y)
-{
-	char	*ptr;
-
-	ptr = img->addr + (y * img->ll + x * (img->bpp / 8));
-	return (*((int *)ptr));
-}
+/*
 300 = hauteurdelafenetre/distance;
 (10, 55) (10 / 300 * 800, 55 / 300 * 800)
 */
-
-/* void	*mlx;
-	void	*img;
-	char	*relative_path = "./test.xpm";
-	int		img_width;
-	int		img_height;
-
-	mlx = mlx_init();
-	img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);*/

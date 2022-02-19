@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/17 12:41:27 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/19 16:05:58 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct s_data {
 	int     press;
 	int		press_turn;
 	
+	void	*img_n;
+	char	*addr_n;
+	int		w_n;
+	int 	h_n;
+	int 	bpp_n;
+	int		ll_n;
+	int		endian_n;
+
 }				t_data;
 
 typedef struct s_ray {
