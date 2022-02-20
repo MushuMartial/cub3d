@@ -14,14 +14,14 @@
 
 void init_raycast(t_ray *ray, t_data *data)
 {
-    ray->start_x = data->x + 0.05;
-    ray->start_y = data->y + 0.05;
-    ray->dir_x = sin(data->dir_ray * (0.01745329251));//* (PI / 180)
-	ray->dir_y = cos(data->dir_ray * (0.01745329251));
+    ray->start_x = data->x;
+    ray->start_y = data->y;
+    ray->dir_x = sin(data->dir_ray * RAD);//* (PI / 180)
+	ray->dir_y = cos(data->dir_ray * RAD);
     ray->ustep_x = sqrt(1.0 + pow(ray->dir_y / ray->dir_x, 2));
     ray->ustep_y = sqrt(1.0 + pow(ray->dir_x / ray->dir_y, 2));
-    ray->map_x = (int)(data->x + 0.05);
-    ray->map_y = (int)(data->y + 0.05);
+    ray->map_x = (int)(data->x);
+    ray->map_y = (int)(data->y);
     ray->fish = 0;
 
     // connaitre la direction et taille   
@@ -79,12 +79,12 @@ void init_raycast(t_ray *ray, t_data *data)
         {
             ray->intersec_x = ray->start_x + (ray->dir_x * fdistance);
             ray->intersec_y = ray->start_y + (ray->dir_y * fdistance);
-            ray->len = sqrt(pow(ray->intersec_x - (data->x + 0.05),2) + pow(ray->intersec_y - (data->y + 0.05),2));
+            ray->len = sqrt(pow(ray->intersec_x - (data->x),2) + pow(ray->intersec_y - (data->y),2));
             return ;
         }
     }
     ray->intersec_x = ray->start_x + (ray->dir_x * 1);
     ray->intersec_y = ray->start_y + (ray->dir_y * 1);
-    ray->len = sqrt(pow(ray->intersec_x - (data->x + 0.05),2) + pow(ray->intersec_y - (data->y + 0.05),2));
+    ray->len = sqrt(pow(ray->intersec_x - (data->x),2) + pow(ray->intersec_y - (data->y),2));
     return ;
 }

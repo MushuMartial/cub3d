@@ -15,9 +15,17 @@
 /* Move player */
 int move_player(t_data *data)
 {
-	if (data->press == 1 || data->press_turn == 1)
+	float tempx = data->x;
+	float tempy = data->y;
+	tempx += data->add_x;
+	tempy += data->add_y;
+
+	if ( data->press == 1 || data->press_turn == 1)
 	{
-		//make_img(data);
+		make_img(data);
+		if(data->map[(int)tempy][(int)tempx] == '1')
+			return (0);
+		data->y += data->add_y;
 		data->x += data->add_x;
 		data->y += data->add_y;
 		make_player(data);
@@ -26,55 +34,112 @@ int move_player(t_data *data)
 	return(0);
 }
 
-/* Change variables to move */
-void moving(t_data *data, float x, float y, int pres)
-{
-	if (data->add_x != 0.0 && data->add_y != 0.0 && pres == 0)
-		(void)NULL;
-	else
-		data->press = pres;
-	//x = cos(data->direction * (0.01745329251));
-	//y = sin(data->direction * (0.01745329251));
-	if (data->add_x != x)
-		data->add_x += x;
-	if (data->add_y != y)
-		data->add_y += y;
-}
-
 /* turn sides */
 void turning(t_data *data, int pres, int sens)
 {
+//	float oldPlaneX;
+
 	data->press_turn = pres;
 	if (data->press_turn == 1 && sens == 1)
 	{
-		if (data->direction == 360)
-			data->direction = 0;
+		if (data->direction == 0)
+			data->direction = 360;
+		if (data->direction == 363)
+			data->direction = 3;
 		data->direction += 3;
 	}
 	else if (data->press_turn == 1 && sens == 0)
 	{
 		if (data->direction == 0)
 			data->direction = 360;
+		if (data->direction == 363)
+			data->direction = 3;
 		data->direction -= 3;
 	}
+}
+
+void	forward(t_data *data)
+{
+	float tempx = data->x;
+	float tempy = data->y;
+	
+	tempx += cos(data->direction * RAD) * 0.16;
+	tempy += sin(data->direction * RAD) * 0.16;
+	if(data->map[(int)tempy][(int)tempx] == '1')
+		return ;
+	data->x += cos(data->direction * RAD) * 0.06;// on avance sur X
+	data->y += sin(data->direction * RAD) * 0.06;// on avance sur Y
+		make_img(data);
+	make_player(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+}
+
+void	back(t_data *data)
+{
+	float tempx = data->x;
+	float tempy = data->y;
+	
+	tempx -= cos(data->direction * RAD) * 0.16;
+	tempy -= sin(data->direction * RAD) * 0.16;
+	if(data->map[(int)tempy][(int)tempx] == '1')
+		return ;
+	data->x -= cos(data->direction * RAD) * 0.06;// on recule sur X
+	data->y -= sin(data->direction * RAD) * 0.06;// on recule sur Y
+	make_img(data);
+	make_player(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+}
+
+void	left(t_data *data)
+{
+	float tempx = data->x;
+	float tempy = data->y;
+	
+	tempx += sin(data->direction * RAD) * 0.16;
+	tempy -= cos(data->direction * RAD) * 0.16;
+	if(data->map[(int)tempy][(int)tempx] == '1')
+		return ;
+	data->x += sin(data->direction * RAD) * 0.06;
+	data->y -= cos(data->direction * RAD) * 0.06;
+
+	make_img(data);
+	make_player(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+}
+
+void	right(t_data *data)
+{
+	float tempx = data->x;
+	float tempy = data->y;
+	
+	tempx -= sin(data->direction * RAD) * 0.16;
+	tempy += cos(data->direction * RAD) * 0.16;
+	if(data->map[(int)tempy][(int)tempx] == '1')
+		return ;
+	data->x -= sin(data->direction * RAD) * 0.06;
+	data->y += cos(data->direction * RAD) * 0.06;
+
+	make_img(data);
+	make_player(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
 /* Check presskey */
 int presskey(int keycode, t_data *data)
 {
-	if (keycode == 53)
+	if (keycode == ESC)
 		exit_mlx(data);
-	if (keycode == 2)//left
-		moving(data, -0.015, 0, 1);
-	else if (keycode == 0)//droit
-		moving(data, 0.015, 0, 1);
-	else if (keycode == 13)//up
-		moving(data, 0, -0.015, 1);
-	else if (keycode == 1)//down
-		moving(data, 0, 0.015, 1);
-	else if (keycode == 124)//left g
+	if (keycode == LEFT)
+		left(data);
+	else if (keycode == RIGHT)
+		right(data);
+	else if (keycode == UP)
+		forward(data);
+	else if (keycode == DOWN)
+		back(data);
+	else if (keycode == LOOK_LEFT)
 		turning(data, 1, 1);
-	else if (keycode == 123)//right
+	else if (keycode == LOOK_RIGHT)
 		turning(data, 1, 0);
 	return (0);
 }
@@ -82,19 +147,19 @@ int presskey(int keycode, t_data *data)
 /* Check unpresskey */
 int un_presskey(int keycode, t_data *data)
 {
-	if (keycode == 53)
+	if (keycode == ESC)
 		exit_mlx(data);
-	if (keycode == 2)//left
-		moving(data, 0.015, 0, 0);
-	else if (keycode == 0)//droit
-		moving(data, -0.015, 0, 0);
-	else if (keycode == 13)//up
-		moving(data, 0, 0.015, 0);
-	else if (keycode == 1)//down
-		moving(data, 0, -0.015, 0);
-	else if (keycode == 124)//left g
+	if (keycode == LEFT)
+		left(data);
+	else if (keycode == RIGHT)
+		right(data);
+	else if (keycode == UP)
+		forward(data);
+	else if (keycode == DOWN)
+		back(data);
+	else if (keycode == LOOK_LEFT)
 		turning(data, 0, 0);
-	else if (keycode == 123)//right
+	else if (keycode == LOOK_RIGHT)
 		turning(data, 0, 0);
 	return (0);
 }

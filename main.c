@@ -6,59 +6,54 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:27 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/19 17:26:26 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:48:19 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	img_pixel(t_data *data, int x, int y)
-{
-	char	*ptr;
+//pos joueur
+//vue pdt le spwan
 
-	ptr = data->addr_n + (y * data->ll_n + x * (data->bpp_n / 8));
-	return (*((int *)ptr));
-}
-
-int main()
+int main(int argc, char **argv)
 {
     t_data data;
+
+	yasin(&data, argc, argv);
+
 	data.press = 0;
-	make_map(&data);
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, 800, 800, "cub3d");
 	data.img = mlx_new_image(data.mlx, 800, 800);
 	data.addr = mlx_get_data_addr(data.img, &data.b_pix, &data.len_pix, &data.endian);
-	
-
-	//make_player(&data);
-	//mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
-	data.img_n = mlx_xpm_file_to_image(data.mlx, "./north.xpm", &data.w_n, &data.h_n);
-	data.addr_n = mlx_get_data_addr(data.img_n, &data.bpp_n, &data.ll_n, &data.endian_n);
-	float i = 0;
-	float j = 0;
-	int color = 0;
-	while (j < 600)
-	{
-		i = 0;
-		while (i < 600)
-		{
-			color = img_pix(&data, i * (data.w_n / 800.0), j * (data.h_n / 800));
-			my_mlx_pixel_put(&data, i, j ,color);
-			i++;
-		}
-		j++;
-	}
-	
+	make_player(&data);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_hook(data.win, 2, 1L << 0, presskey, &data);
    	mlx_hook(data.win, 3, 1L << 0, un_presskey, &data); 
 	mlx_hook(data.win, 17, 1L << 0, &exit_mlx, &data);
-	//mlx_loop_hook(data.mlx, &move_player, &data);
+	mlx_loop_hook(data.mlx, &move_player, &data);
 	mlx_loop(data.mlx);
 }
 
-/*
-300 = hauteurdelafenetre/distance;
-(10, 55) (10 / 300 * 800, 55 / 300 * 800)
-*/
+/* void make_map(t_data *data)
+{
+	data->map = malloc(sizeof(char *) * 8);
+	data->map[0] = ft_strdup("11111111");
+    data->map[1] = ft_strdup("10000011");
+    data->map[2] = ft_strdup("10000001");
+    data->map[3] = ft_strdup("10010011");
+    data->map[4] = ft_strdup("10010001");
+    data->map[5] = ft_strdup("10000001");
+    data->map[6] = ft_strdup("100P0101");
+    data->map[7] = ft_strdup("11111111");
+    data->map_h = 8;
+    data->map_l = 8;
+	data->x = 3.45;
+    data->y = 6.45;
+	data->add_x = 0;
+	data->add_y = 0;
+	data->press = 0;
+    data->press_turn = 0;
+	data->direction = 180.000;
+    
+}*/
