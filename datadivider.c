@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   datadivider.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinbestrioui <marvin@42.fr>              +#+  +:+       +#+        */
+/*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 16:25:51 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/17 11:06:11 by ybestrio         ###   ########.fr       */
+/*   Updated: 2022/02/21 10:54:11 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "cub3d.h"
 
 void ft_divideno(int i, int k, char **tab, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
-		while (k < data->maplen)
+		while (k < data->map_l)
 		{
 			if (tab[i][k] == 'N' && tab[i][k+1] == 'O')
 			{
@@ -33,9 +34,9 @@ void ft_divideno(int i, int k, char **tab, t_data *data)
 
 void ft_divideso(int i, int k, char **tab, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
-		while (k < data->maplen)
+		while (k < data->map_l)
 		{
 			if (tab[i][k] == 'S' && tab[i][k+1] == 'O')
 			{
@@ -54,9 +55,9 @@ void ft_divideso(int i, int k, char **tab, t_data *data)
 
 void ft_divideea(int i, int k, char **tab, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
-		while (k < data->maplen)
+		while (k < data->map_l)
 		{
 			if (tab[i][k] == 'E' && tab[i][k+1] == 'A')
 			{
@@ -75,9 +76,9 @@ void ft_divideea(int i, int k, char **tab, t_data *data)
 
 void ft_dividewe(int i, int k, char **tab, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
-		while (k < data->maplen)
+		while (k < data->map_l)
 		{
 			if (tab[i][k] == 'W' && tab[i][k+1] == 'E')
 			{
@@ -96,9 +97,9 @@ void ft_dividewe(int i, int k, char **tab, t_data *data)
 
 void	ft_dividefloor(int i, int k, char **tab, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
-		while (k < data->maplen)
+		while (k < data->map_l)
 		{
 			if (tab[i][k] == 'F' && tab[i][k+1] == ' ')
 			{
@@ -117,9 +118,9 @@ void	ft_dividefloor(int i, int k, char **tab, t_data *data)
 	
 void	ft_divideceiling(int i, int k, char **tab, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
-		while (k < data->maplen)
+		while (k < data->map_l)
 		{
 			if (tab[i][k] == 'C' && tab[i][k+1] == ' ')
 			{

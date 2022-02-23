@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinbestrioui <marvin@42.fr>              +#+  +:+       +#+        */
+/*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:45:12 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/17 10:46:38 by ybestrio         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:59:27 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ft_cleanpath(char **tab, int ln, int tx, t_data *data)
@@ -35,17 +36,17 @@ void	ft_dividemap(int i, int k, char **tab, t_data *data)
 	
 	m = 0;
 	i = data->lowhei + 1;
-	rest = (data->maphei - i) + 1;
-	data->map = ft_calloc(sizeof(char *), rest);//protection de malloc
+	rest = (data->map_h - i) + 1;
+	data->map = ft_calloc(sizeof(char *), rest + 3);//protection de malloc
 	while (k < rest)
 	{
-		data->map[k] = ft_calloc(sizeof(char), data->maplen);
+		data->map[k] = ft_calloc(sizeof(char), data->map_l);
 		k++;
 	}
 	k = 0;
-	while(i < data->maphei)
+	while(i < data->map_h)
 	{
-		while(k < data->maplen)
+		while(k < data->map_l)
 		{
 			data->map[m][k] = tab[i][k];
 			k++;
@@ -54,6 +55,14 @@ void	ft_dividemap(int i, int k, char **tab, t_data *data)
 		i++;
 		m++;
 	}
+}
+
+void	ft_setheight(int i, t_data *data)
+{
+	while (data->map[i] != 0)
+		i++;
+	data->map_h = i;
+
 }
 
 void	ft_dividein3(char **tab, t_data *data)
@@ -66,7 +75,7 @@ void	ft_dividein3(char **tab, t_data *data)
 	data->txtr = malloc(sizeof(char *) * 4); //I could set that in a initiate
 	
 	for(int turn = 0; turn < 4 ; turn++) //supprimer ce for
-		data->txtr[turn] = ft_calloc(sizeof(char), data->maplen + 1);
+		data->txtr[turn] = ft_calloc(sizeof(char), data->map_l + 1);
 	
 	ft_divideno(i, k, tab, data);
 	ft_divideso(i, k, tab, data);
@@ -75,6 +84,7 @@ void	ft_dividein3(char **tab, t_data *data)
 	ft_dividefloor(i, k, tab, data);
 	ft_divideceiling(i, k, tab, data);
 	ft_dividemap(i, k, tab, data);	
+	ft_setheight(i, data);
 	// I NEED TO ADD A FREE FUNCTION FOR THE TAB 2DArray
 	ft_verifrgb(tab, i, k, data);
 	free_tab(tab);
@@ -83,7 +93,7 @@ void	ft_dividein3(char **tab, t_data *data)
 
 void	ft_locatefloor(char **tab, int i, int k, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
 		while (tab[i][k] != '\n')
 		{
@@ -102,7 +112,7 @@ void	ft_locatefloor(char **tab, int i, int k, t_data *data)
 
 void	ft_locateceiling(char **tab, int i, int k, t_data *data)
 {
-	while (i < data->maphei)
+	while (i < data->map_h)
 	{
 		while (tab[i][k] != '\n')
 		{
@@ -218,8 +228,5 @@ void	ft_checkceiling(char **tab, int i, int k) // need to rewrite and optimize
 			b[m++] = tab[i][k++];
 		b[m] = 0;
 	}
-	printf("r = %s\n", r);
-	printf("g = %s\n", g);
-	printf("b = %s\n", b);
 	ft_rgbsize(atoi(r), atoi(g), atoi(b));
 }

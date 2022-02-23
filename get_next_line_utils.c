@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinbestrioui <marvin@42.fr>              +#+  +:+       +#+        */
+/*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 14:11:26 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/03 14:55:14 by yasinbest        ###   ########.fr       */
+/*   Updated: 2022/02/21 10:42:32 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	*ft_calloc(size_t elementCount, size_t elementSize)

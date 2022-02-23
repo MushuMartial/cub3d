@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/17 12:41:27 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:09:25 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@
 # define LOOK_LEFT 123
 # define LOOK_RIGHT 124
 
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		w;
+	int		h;
+	int		bpp;
+	int		l_l;
+	int		endian;
+
+}			t_img;
 
 typedef struct s_data {
 
@@ -43,8 +53,6 @@ typedef struct s_data {
 	int		endian;
 
 	/* data */
-	int		maplen;
-	int		maphei;
 	int 	map_l;
 	int		map_h;
 	char	**map;
@@ -66,18 +74,18 @@ typedef struct s_data {
 	int		lowhei;
 	int 	playercount;
 	char	**txtr;
+	
+	/* wall */
+	float	up;
+	float down;
+	float i2;
+	
+	t_img north;
+	t_img south;
+	t_img west;
+	t_img east;
 }				t_data;
 
-typedef struct s_img {
-	void	*img;
-	char	*addr;
-	int		w;
-	int		h;
-	int		bpp;
-	int		l_l;
-	int		endian;
-
-}			t_img;
 
 typedef struct s_ray {
 	float start_x;
@@ -95,15 +103,17 @@ typedef struct s_ray {
 	float intersec_x;
 	float intersec_y;
 	float len;
-	int fish;//fish
+	int vertical;
 } t_ray;
+
 /* main */
+
 
 /* yasin main */ //errors
 void	yasin(t_data *data, int argc, char **argv);
 void	free_tab(char **tab);
 void	ft_setrange(char *path, char **tab, t_data *data);
-void	ft_setup(char **tab, t_data *data, int len);
+void	ft_setup(char **tab, t_data *data, size_t len);
 
 /* data divider */ //too much ft
 void 	ft_divideno(int i, int k, char **tab, t_data *data);
@@ -122,6 +132,7 @@ void	ft_error(t_data *data);
 void	ft_contentinvalid(char *str);
 void	ft_checkchar(char c);
 void	ft_checkprechar(char c);
+void	ft_setposition(t_data *data, int i, int k);
 
 /* gnl utils */
 void	*ft_calloc(size_t elementCount, size_t elementSize);
@@ -153,6 +164,7 @@ void	ft_images(t_data *data);
 /* parser */
 void	ft_cleanpath(char **tab, int ln, int tx, t_data *data);
 void	ft_dividemap(int i, int k, char **tab, t_data *data);
+void	ft_setheight(int i, t_data *data);
 void	ft_dividein3(char **tab, t_data *data);
 void	ft_locatefloor(char **tab, int i, int k, t_data *data);
 void	ft_locateceiling(char **tab, int i, int k, t_data *data);
@@ -165,26 +177,23 @@ void	ft_rgbsize(int r, int g, int b);
 /* utils */
 int		exit_mlx(t_data	*data);
 char	*ft_strdup(const char *s1);
+void	sprites_init(t_data *data);
 
 /* raycast */
 void 	init_raycast(t_ray *ray, t_data *data);
 
 /* draw */
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void 	draw_black(t_data *data);
-void 	draw_wall(t_ray *ray, t_data *data, int x);
-void 	make_player(t_data *data);
-void 	draw_rays(t_data *data);
-void 	draw_line(t_data *data, int x, int up, int down, int color);
+int		img_pix(t_img *img, int x, int y);
+void	draw_one_wall(t_ray *ray, t_data *data, t_img *wall, int x);
+void	draw_wall(t_ray *ray, t_data *data, int x);
+void	make_player(t_data *data);
 
 /* move */
-int		move_player(t_data *data);
-void 	turning(t_data *data, int pres, int sens);
-void	forward(t_data *data);
-void	back(t_data *data);
-void	left(t_data *data);
-void	right(t_data *data);
-int		presskey(int keycode, t_data *data);
-int		un_presskey(int keycode, t_data *data);
+int move_player(t_data *data);
+void moving(t_data *data, int action, int pres);
+void turning(t_data *data, int pres, int sens);
+int presskey(int keycode, t_data *data);
+int un_presskey(int keycode, t_data *data);
 
 #endif

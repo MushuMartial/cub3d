@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 13:26:09 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/18 13:31:56 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:09:45 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void init_raycast(t_ray *ray, t_data *data)
     ray->ustep_y = sqrt(1.0 + pow(ray->dir_x / ray->dir_y, 2));
     ray->map_x = (int)(data->x);
     ray->map_y = (int)(data->y);
-    ray->fish = 0;
+    ray->vertical = 0;
 
     // connaitre la direction et taille   
     if (ray->dir_x < 0) //ray to the left x dimiune else x augmente
@@ -47,7 +47,7 @@ void init_raycast(t_ray *ray, t_data *data)
     }
     
     int bTileFound = 0;
-    float fmaxdistance = 8;
+    float fmaxdistance = 24;
     float fdistance = 0;
     while (!bTileFound && fdistance < fmaxdistance)
     {
@@ -57,24 +57,23 @@ void init_raycast(t_ray *ray, t_data *data)
             ray->map_x += ray->vStep_x;
             fdistance = ray->lenx;
             ray->lenx += ray->ustep_x;
-            ray->fish = 1;//true
+            ray->vertical = 1;//true
         }
         else
         {
             ray->map_y += ray->vStep_y;
             fdistance = ray->leny;
             ray->leny += ray->ustep_y;
-            ray->fish = 0;
+            ray->vertical = 0;
         }
         //check collision
-        if (ray->map_x >= 0 && ray->map_x < 8 && ray->map_y >= 0 && ray->map_y < 8)
+        if (ray->map_x >= 0 && ray->map_x < 50 && ray->map_y >= 0 && ray->map_y < 50)
         {
             if (data->map[(int)(ray->map_y)][(int)(ray->map_x)] == '1')
             {
                 bTileFound = 1;
             }
         }
-        
         if(bTileFound == 1)
         {
             ray->intersec_x = ray->start_x + (ray->dir_x * fdistance);

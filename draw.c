@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/19 14:17:32 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:10:03 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,104 +18,90 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->len_pix + x * (data->b_pix / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
-void draw_black(t_data *data)
+int	img_pix(t_img *img, int x, int y)
 {
-    int i;
-	int j;
+	char	*ptr;
 
-	j = 0;
-	while (j < 800)
+	ptr = img->addr + (y * img->l_l + x * (img->bpp / 8));
+	return (*((int *)ptr));
+}
+
+void	draw_one_wall(t_ray *ray, t_data *data, t_img *wall, int x)
+{
+	data->i2 = data->up;
+	while (data->up < data->down)
 	{
-		i = 0;
-		while (i < 800)
+		if (data->up >= 0 && data->up <= 800)
 		{
-			my_mlx_pixel_put(data, i, j, 0x00FFFFFF);
-			i++;
+			if (ray->vertical == 1)
+				my_mlx_pixel_put(data, x, data->up,
+					img_pix(wall, ((ray->intersec_y
+								- (int)(ray->intersec_y))) * (float)wall->w,
+						(((float)data->up - data->i2)
+							/ (float)(data->down - data->i2))
+						* (float)wall->h));
+			else
+				my_mlx_pixel_put(data, x, data->up,
+					img_pix(wall, ((ray->intersec_x
+								- (int)(ray->intersec_x))) * (float)wall->w,
+						(((float)data->up - data->i2)
+							/ (float)(data->down - data->i2))
+						* (float)wall->h));
 		}
-		j++;
+		data->up++;
 	}
 }
 
-void draw_wall(t_ray *ray, t_data *data, int x)
+void	draw_wall(t_ray *ray, t_data *data, int x)
 {
-     float z = (cos((data->direction - data->dir_ray)  * RAD));
-    float wallheight = ((800.0) / ((ray->len * z)));
-    float i = 400.0 - (wallheight / 2.0);
-    float j = 400.0 + (wallheight / 2.0);
-    if (i >= 0 && i < 800)
-        draw_line(data, x, 0, (i), 0x0FFFFFFFFF);//sky
-    if (i < 0)
-        i = 0;
-    if (i > 800)
-        i = 800;
-    if (j < 0)
-        j = 0;
-    if (j > 800)
-        j = 800;
-    //printf("angle = %f\n",cos(data->dir_ray * RAD));
-    if (i >= 0 && i <= 800 && j >= 0 && j <= 800)
-    {
-        if (ray->fish == 1 && cos((data->dir_ray + 90.0) * RAD) > 0.0)//&& cos((data->dir_ray) * RAD)> 0.0
-        {
-            //printf("angle = %f\n",cos(data->dir_ray * RAD));
-            draw_line(data, x, (i), (j), 0x00000000);//ouest noir
-        }
-        else if (ray->fish == 1)
-        {
-            printf("angle = %f\n",cos((data->dir_ray + 90.0)* RAD));
-            draw_line(data, x, (i), (j), 0x0000AA00);//est vert
-        }
-        else if (sin((data->dir_ray + 90.0) * RAD) > 0.0)//sin((data->dir_ray) * RAD) > 0.0
-        {
-            draw_line(data, x, (i), (j), 0x00AA0000);//nord rouge
-        }
-        else
-        {
-            draw_line(data, x, (i), (j), 0x000000AA);//nord bleu  0x000000AA
-        }
-    }
-}
+	int	i;
 
-void make_player(t_data *data)
-{
-    draw_black(data);
-    draw_rays(data);
-    
-    //write(1,"mov\n",4);
-    printf("direction = %f\n", data->direction);
-   // printf("direction = %f\n", data->direction);
-}
-
-void draw_rays(t_data *data)
-{
-    float i;
-    float add;
-    t_ray ray;
-    
-    data->dir_ray = data->direction;
-    i = 0;
-    add = 60.0 / 800.0;
-    if (data->dir_ray <= 29)
-        data->dir_ray = data->dir_ray + 360;
-    data->dir_ray -= 30;
-    while(i < 800)
-    {
-        //printf("dir ray = %f\n", data->dir_ray);
-        init_raycast(&ray, data);
-        draw_wall(&ray, data, i);
-        data->dir_ray+= add;
-        i++;
-    }
-}
-
-void draw_line(t_data *data, int x, int up, int down, int color)
-{
-	while (up < down)
+	i = 0;
+	data->up = 400.0 - (((800.0)
+				/ ((ray->len * (cos((data->direction - data->dir_ray)
+								* RAD))))) / 2.0);
+	data->down = 400.0 + (((800.0)
+				/ ((ray->len * (cos((data->direction - data->dir_ray)
+								* RAD))))) / 2.0);
+	if (data->up >= 0)
 	{
-		my_mlx_pixel_put(data, x, up, color);
-		up++;
+		while (i < data->up)
+			my_mlx_pixel_put(data, x, i++, data->ceiling);
+		i = data->down;
+		while (i < 800)
+			my_mlx_pixel_put(data, x, i++, data->floor);
 	}
+	if (ray->vertical == 1 && cos((data->dir_ray + 90.0) * RAD) > 0.0)
+		draw_one_wall(ray, data, &data->west, x);
+	else if (ray->vertical == 1)
+		draw_one_wall(ray, data, &data->east, x);
+	else if (sin((data->dir_ray + 90.0) * RAD) > 0.0)
+		draw_one_wall(ray, data, &data->north, x);
+	else
+		draw_one_wall(ray, data, &data->south, x);
+}
+
+void	make_player(t_data *data)
+{
+	float	i;
+	float	add;
+	t_ray	ray;
+
+	data->dir_ray = data->direction;
+	i = 0;
+	add = 60.0 / 800.0;
+	if (data->dir_ray <= 29)
+		data->dir_ray = data->dir_ray + 360;
+	data->dir_ray -= 30;
+	while (i < 800)
+	{
+		init_raycast(&ray, data);
+		draw_wall(&ray, data, i);
+		data->dir_ray += add;
+		i++;
+	}
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }

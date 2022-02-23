@@ -1,8 +1,9 @@
 NAME = cub3D
-SRC = main.c parser.c libft.c utils.c draw.c move.c raycast.c
+SRC = main.c datadivider.c draw.c error.c get_next_line_utils.c get_next_line.c makers.c \
+	matrix.c move.c parser.c raycast.c utils.c yasmain.c
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 LINKS = -lmlx -framework OpenGL -framework AppKit 
 CC = gcc
 RM = rm -rf

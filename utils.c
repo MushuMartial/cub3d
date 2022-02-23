@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 15:46:53 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/14 12:12:18 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:44:24 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,16 @@ char	*ft_strdup(const char *s1)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+void sprites_init(t_data *data)
+{
+	data->north.img = mlx_xpm_file_to_image(data->mlx, "./north.xpm", &data->north.w, &data->north.h);
+	data->north.addr = mlx_get_data_addr(data->north.img, &data->north.bpp, &data->north.l_l, &data->north.endian);
+	data->south.img = mlx_xpm_file_to_image(data->mlx, "./south.xpm", &data->south.w, &data->south.h);
+	data->south.addr = mlx_get_data_addr(data->south.img, &data->south.bpp, &data->south.l_l, &data->south.endian);
+	data->west.img = mlx_xpm_file_to_image(data->mlx, "./west.xpm", &data->west.w, &data->west.h);
+	data->west.addr = mlx_get_data_addr(data->west.img, &data->west.bpp, &data->west.l_l, &data->west.endian);
+	data->east.img = mlx_xpm_file_to_image(data->mlx, "./east.xpm", &data->east.w, &data->east.h);
+	data->east.addr = mlx_get_data_addr(data->east.img, &data->east.bpp, &data->east.l_l, &data->east.endian);
 }

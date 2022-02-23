@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinbestrioui <marvin@42.fr>              +#+  +:+       +#+        */
+/*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:07:06 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/17 10:47:01 by ybestrio         ###   ########.fr       */
+/*   Updated: 2022/02/22 13:06:08 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "cub3d.h"
 
 void ft_forbiddenmap(t_data *data)
@@ -26,6 +27,7 @@ void ft_forbiddenmap(t_data *data)
 			ft_checkcount(data->map[i][k], data);
 			ft_checkprechar(data->map[i][k]);
 			ft_checkwall(data->map[i][k], i, k, data);
+			ft_setposition(data, i, k);
 			k++;
 		}
 		k = 0;
@@ -35,6 +37,34 @@ void ft_forbiddenmap(t_data *data)
 	{
 		printf("Error : player number is incorrect\n");
 		exit(1);
+	}
+}
+
+void	ft_setposition(t_data *data, int i, int k)
+{
+	if (data->map[i][k] == 'N')
+	{
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
+		data->direction = 180;
+	}
+	if (data->map[i][k] == 'E')
+	{
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
+		data->direction = 270;
+	}
+	if (data->map[i][k] == 'W')
+	{
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
+		data->direction = 90;
+	}
+	if (data->map[i][k] == 'S')
+	{
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
+		data->direction = 0;
 	}
 }
 

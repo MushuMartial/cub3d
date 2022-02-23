@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   makers.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinbestrioui <marvin@42.fr>              +#+  +:+       +#+        */
+/*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 12:24:53 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/16 17:18:26 by yasinbest        ###   ########.fr       */
+/*   Updated: 2022/02/21 12:44:11 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 #include "cub3d.h"
 
 int	create_rgb(int r, int g, int b)
@@ -31,16 +33,19 @@ void	ft_makefloor(char **tab, int i, int k, t_data *data) // need to rewrite and
 			k++;
 		while (tab[i][k] != ',' && tab[i][k] != ' ')
 			r[m++] = tab[i][k++];
+		r[m] = 0;
 		m = 0;
 		while (tab[i][k] == ' ' || tab[i][k] == ',')
 			k++;
 		while (tab[i][k] != ',' && tab[i][k] != ' ')
 			g[m++] = tab[i][k++];
+		g[m] = 0;
 		m = 0;
 		while (tab[i][k] == ' ' || tab[i][k] == ',')
 			k++;
 		while (tab[i][k] != ',' && tab[i][k] != ' ' && tab[i][k] != '\n')
 			b[m++] = tab[i][k++];
+		b[m] = 0;
 	}
 	data->floor = create_rgb(atoi(r), atoi(g), atoi(b));
 }
@@ -76,19 +81,19 @@ void	ft_makeceiling(char **tab, int i, int k, t_data *data)
 			k++;
 		while (tab[i][k] != ',' && tab[i][k] != ' ')
 			r[m++] = tab[i][k++];
-	//	r[m] = 0; // is it useless ??
+		r[m] = 0;
 		m = 0;
 		while (tab[i][k] == ' ' || tab[i][k] == ',')
 			k++;
 		while (tab[i][k] != ',' && tab[i][k] != ' ')
 			g[m++] = tab[i][k++]; 
-	//	g[m] = 0;
+		g[m] = 0;
 		m = 0;
 		while (tab[i][k] == ' ' || tab[i][k] == ',')
 			k++;
 		while (tab[i][k] != ',' && tab[i][k] != ' ' && tab[i][k] != '\n')
 			b[m++] = tab[i][k++]; 
-	//	b[m] = 0;
+		b[m] = 0;
 	}
 	data->ceiling = create_rgb(atoi(r), atoi(g), atoi(b)); //switch to ft_atoi
 }
