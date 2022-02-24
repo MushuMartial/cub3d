@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:27:19 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/22 11:21:24 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/23 17:08:26 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,39 @@ void moving(t_data *data, int action, int pres)
 
 	if (action == 1)
 	{
-		tempx += cos(data->direction * (PI / 180)) * 0.16;
-		tempy -= sin(data->direction * (PI / 180)) * 0.16;
+		tempx += cos(data->direction * RAD) * 0.16;
+		tempy -= sin(data->direction * RAD) * 0.16;
 		if (data->map[(int)tempy][(int)tempx] == '1')
 			return;
-		data->x += cos(data->direction * (PI / 180)) * 0.06;
-		data->y -= sin(data->direction * (PI / 180)) * 0.06;
+		data->x += cos(data->direction * RAD) * 0.06;
+		data->y -= sin(data->direction * RAD) * 0.06;
 	}
 	if (action == 2)
 	{
-		tempx += sin(data->direction * (PI / 180)) * 0.16;
-		tempy += cos(data->direction * (PI / 180)) * 0.16;
+		tempx += sin(data->direction * RAD) * 0.16;
+		tempy += cos(data->direction * RAD) * 0.16;
 		if (data->map[(int)tempy][(int)tempx] == '1')
 			return;
-		data->x += sin(data->direction * (PI / 180)) * 0.06;
-		data->y += cos(data->direction * (PI / 180)) * 0.06;
+		data->x += sin(data->direction * RAD) * 0.06;
+		data->y += cos(data->direction * RAD) * 0.06;
 	}
 	if (action == 3)
 	{
-		tempx -= cos(data->direction * (PI / 180)) * 0.16;
-		tempy += sin(data->direction * (PI / 180)) * 0.16;
+		tempx -= cos(data->direction * RAD) * 0.16;
+		tempy += sin(data->direction * RAD) * 0.16;
 		if (data->map[(int)tempy][(int)tempx] == '1')
 			return;
-		data->x -= cos(data->direction * (PI / 180)) * 0.06;
-		data->y += sin(data->direction * (PI / 180)) * 0.06;
+		data->x -= cos(data->direction * RAD) * 0.06;
+		data->y += sin(data->direction * RAD) * 0.06;
 	}
 	if (action == 4)
 	{
-		tempx -= sin(data->direction * (PI / 180)) * 0.16;
+		tempx -= sin(data->direction * RAD) * 0.16;
 		tempy -= cos(data->direction * (PI / 180)) * 0.16;
 		if (data->map[(int)tempy][(int)tempx] == '1')
 			return;
-		data->x -= sin(data->direction * (PI / 180)) * 0.06;
-		data->y -= cos(data->direction * (PI / 180)) * 0.06;
+		data->x -= sin(data->direction * RAD) * 0.06;
+		data->y -= cos(data->direction * RAD) * 0.06;
 	}
 	
 	

@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 16:18:03 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/22 11:46:48 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/22 14:04:11 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_setup(char **tab, t_data *data, size_t len)
 //	ft_exception(tab, data, len);
 	ft_dividein3(tab, data);
 	ft_error(data);
-	write(1,"hallo\n", 6);
 }
 
 

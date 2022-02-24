@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:45:12 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/22 11:41:25 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:59:27 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_dividemap(int i, int k, char **tab, t_data *data)
 	m = 0;
 	i = data->lowhei + 1;
 	rest = (data->map_h - i) + 1;
-	data->map = ft_calloc(sizeof(char *), rest);//protection de malloc
+	data->map = ft_calloc(sizeof(char *), rest + 3);//protection de malloc
 	while (k < rest)
 	{
 		data->map[k] = ft_calloc(sizeof(char), data->map_l);

@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:21 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/22 11:35:54 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:31:07 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define DOWN 1
 # define LOOK_LEFT 123
 # define LOOK_RIGHT 124
+# define WINDOW 800.0
 
 typedef struct s_img {
 	void	*img;
@@ -75,6 +76,11 @@ typedef struct s_data {
 	int 	playercount;
 	char	**txtr;
 	
+	/* wall */
+	float	up; //wall form the top point
+	float	down;
+	float	i2;
+	
 	t_img north;
 	t_img south;
 	t_img west;
@@ -82,27 +88,31 @@ typedef struct s_data {
 }				t_data;
 
 
-typedef struct s_ray {
-	float start_x;
-	float start_y;
-	float dir_x;
-	float dir_y;
-	float ustep_x;
-	float ustep_y;
-	float map_x;
-	float map_y;
-	float lenx;
-	float leny;
-	float vStep_x;
-	float vStep_y;
-	float intersec_x;
-	float intersec_y;
-	float len;
-	int fish;//fish
-} t_ray;
+typedef struct	s_ray {
+	float	start_x;
+	float	start_y;
+	float	dir_x;
+	float	dir_y;
+	float	ustep_x;
+	float	ustep_y;
+	float	map_x;
+	float	map_y;
+	float	lenx;
+	float	leny;
+	float	vStep_x;
+	float	vStep_y;
+	float	intersec_x;
+	float	intersec_y;
+	float	len;
+	int		vertical;
+	int		bTileFound;
+	float	fmaxdistance;
+	float	fdistance;
+}				t_ray;
 
 /* main */
-int	img_pix(t_img *img, int x, int y);
+
+
 /* yasin main */ //errors
 void	yasin(t_data *data, int argc, char **argv);
 void	free_tab(char **tab);
@@ -171,17 +181,20 @@ void	ft_rgbsize(int r, int g, int b);
 /* utils */
 int		exit_mlx(t_data	*data);
 char	*ft_strdup(const char *s1);
+void	sprites_init(t_data *data);
 
 /* raycast */
 void 	init_raycast(t_ray *ray, t_data *data);
+void raycast2(t_ray *ray, t_data *data);
+void raycast3(t_ray *ray, t_data *data);
+void raycast4(t_ray *ray, t_data *data);
 
 /* draw */
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void 	draw_black(t_data *data);
-void 	draw_wall(t_ray *ray, t_data *data, int x);
-void 	make_player(t_data *data);
-void 	draw_rays(t_data *data);
-void 	draw_line(t_data *data, int x, int up, int down, int color);
+int		img_pix(t_img *img, int x, int y);
+void	draw_one_wall(t_ray *ray, t_data *data, t_img *wall, int x);
+void	draw_wall(t_ray *ray, t_data *data, int x);
+void	make_player(t_data *data);
 
 /* move */
 int move_player(t_data *data);

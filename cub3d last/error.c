@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:07:06 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/22 11:52:47 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/22 13:06:08 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,26 @@ void	ft_setposition(t_data *data, int i, int k)
 {
 	if (data->map[i][k] == 'N')
 	{
-		data->x = (float)i + 0.5;
-		data->y = (float)k + 0.5;
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
 		data->direction = 180;
 	}
 	if (data->map[i][k] == 'E')
 	{
-		data->x = (float)i + 0.5;
-		data->y = (float)k + 0.5;
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
 		data->direction = 270;
 	}
 	if (data->map[i][k] == 'W')
 	{
-		data->x = (float)i + 0.5;
-		data->y = (float)k + 0.5;
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
 		data->direction = 90;
 	}
 	if (data->map[i][k] == 'S')
 	{
-		data->x = (float)i + 0.5;
-		data->y = (float)k + 0.5;
+		data->x = (float)k + 0.5;
+		data->y = (float)i + 0.5;
 		data->direction = 0;
 	}
 }
