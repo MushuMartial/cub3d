@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:24:27 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/23 17:04:16 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:07:24 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	main(int argc, char **argv)
 	data.addr = mlx_get_data_addr(data.img, &data.b_pix,
 			&data.len_pix, &data.endian);
 	data.press = 0;
-	data.map_l = 24;
-	data.map_h = 24;
 	sprites_init(&data);
 	make_player(&data);
 	mlx_hook(data.win, 2, 1L << 0, presskey, &data);

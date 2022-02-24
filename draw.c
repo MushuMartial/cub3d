@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/23 17:10:03 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:39:26 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+/* get color in image */
 int	img_pix(t_img *img, int x, int y)
 {
 	char	*ptr;
@@ -29,12 +30,13 @@ int	img_pix(t_img *img, int x, int y)
 	return (*((int *)ptr));
 }
 
+/* draw one wall */
 void	draw_one_wall(t_ray *ray, t_data *data, t_img *wall, int x)
 {
 	data->i2 = data->up;
 	while (data->up < data->down)
 	{
-		if (data->up >= 0 && data->up <= 800)
+		if (data->up >= 0 && data->up <= WINDOW)
 		{
 			if (ray->vertical == 1)
 				my_mlx_pixel_put(data, x, data->up,
@@ -55,15 +57,16 @@ void	draw_one_wall(t_ray *ray, t_data *data, t_img *wall, int x)
 	}
 }
 
+/* draw walls up = starting point and down = end of wall*/
 void	draw_wall(t_ray *ray, t_data *data, int x)
 {
 	int	i;
 
 	i = 0;
-	data->up = 400.0 - (((800.0)
+	data->up = 400.0 - (((WINDOW)
 				/ ((ray->len * (cos((data->direction - data->dir_ray)
 								* RAD))))) / 2.0);
-	data->down = 400.0 + (((800.0)
+	data->down = 400.0 + (((WINDOW)
 				/ ((ray->len * (cos((data->direction - data->dir_ray)
 								* RAD))))) / 2.0);
 	if (data->up >= 0)
@@ -71,7 +74,7 @@ void	draw_wall(t_ray *ray, t_data *data, int x)
 		while (i < data->up)
 			my_mlx_pixel_put(data, x, i++, data->ceiling);
 		i = data->down;
-		while (i < 800)
+		while (i < WINDOW)
 			my_mlx_pixel_put(data, x, i++, data->floor);
 	}
 	if (ray->vertical == 1 && cos((data->dir_ray + 90.0) * RAD) > 0.0)
@@ -79,11 +82,12 @@ void	draw_wall(t_ray *ray, t_data *data, int x)
 	else if (ray->vertical == 1)
 		draw_one_wall(ray, data, &data->east, x);
 	else if (sin((data->dir_ray + 90.0) * RAD) > 0.0)
-		draw_one_wall(ray, data, &data->north, x);
-	else
 		draw_one_wall(ray, data, &data->south, x);
+	else
+		draw_one_wall(ray, data, &data->north, x);
 }
 
+/* draw lines 60 = fov of player angle de vu */
 void	make_player(t_data *data)
 {
 	float	i;
@@ -92,11 +96,11 @@ void	make_player(t_data *data)
 
 	data->dir_ray = data->direction;
 	i = 0;
-	add = 60.0 / 800.0;
+	add = 60.0 / WINDOW;
 	if (data->dir_ray <= 29)
 		data->dir_ray = data->dir_ray + 360;
 	data->dir_ray -= 30;
-	while (i < 800)
+	while (i < WINDOW)
 	{
 		init_raycast(&ray, data);
 		draw_wall(&ray, data, i);
