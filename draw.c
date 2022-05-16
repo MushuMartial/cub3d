@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:17:01 by tmartial          #+#    #+#             */
-/*   Updated: 2022/02/24 14:39:26 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:20:12 by ybestrio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	draw_one_wall(t_ray *ray, t_data *data, t_img *wall, int x)
 	data->i2 = data->up;
 	while (data->up < data->down)
 	{
-		if (data->up >= 0 && data->up <= WINDOW)
+		if (data->up >= 0 && data->up <= 799)
 		{
 			if (ray->vertical == 1)
 				my_mlx_pixel_put(data, x, data->up,

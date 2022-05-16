@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 14:11:26 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/21 10:42:32 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:04:34 by yasinbest        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 {
 	char	*res;
 
-	res = malloc(elementSize * elementCount);
+	res = malloc((elementSize * elementCount) + 2);
 	if (!res)
 		return (NULL);
-	ft_bzero(res, elementSize * elementCount);
+	ft_bzero(res, (elementSize * elementCount) + 2);
 	return (res);
 }
 

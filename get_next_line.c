@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 10:35:42 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/21 10:42:27 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:59:05 by yasinbest        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*chargeline(char *buffer)
 		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	output = ft_calloc(i + 2, 1);
+	output = ft_calloc(i + 200, 1);
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 	{

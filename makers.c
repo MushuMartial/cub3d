@@ -6,10 +6,9 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 12:24:53 by yasinbest         #+#    #+#             */
-/*   Updated: 2022/02/21 12:44:11 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/05/06 11:52:05 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
@@ -18,34 +17,31 @@ int	create_rgb(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
-void	ft_makefloor(char **tab, int i, int k, t_data *data) // need to rewrite and optimize
+void	ft_makefloor(char **t, int i, int k, t_data *data)
 {
-	char r[4];
-	char g[4];
-	char b[4];
-	int m;
-	
-	m = 0;
-	if (tab[i][k] == 'F')
+	char	r[256];
+	char	g[256];
+	char	b[256];
+
+	if (t[i][k++] == 'F')
 	{
-		k++;
-		while (tab[i][k] == ' ')
+		while (t[i][k] == ' ')
 			k++;
-		while (tab[i][k] != ',' && tab[i][k] != ' ')
-			r[m++] = tab[i][k++];
-		r[m] = 0;
-		m = 0;
-		while (tab[i][k] == ' ' || tab[i][k] == ',')
+		while (t[i][k] != ',' && t[i][k] != ' ')
+			r[data->m++] = t[i][k++];
+		r[data->m] = 0;
+		data->m = 0;
+		while (t[i][k] == ' ' || t[i][k] == ',')
 			k++;
-		while (tab[i][k] != ',' && tab[i][k] != ' ')
-			g[m++] = tab[i][k++];
-		g[m] = 0;
-		m = 0;
-		while (tab[i][k] == ' ' || tab[i][k] == ',')
+		while (t[i][k] != ',' && t[i][k] != ' ')
+			g[data->m++] = t[i][k++];
+		g[data->m] = 0;
+		data->m = 0;
+		while (t[i][k] == ' ' || t[i][k] == ',')
 			k++;
-		while (tab[i][k] != ',' && tab[i][k] != ' ' && tab[i][k] != '\n')
-			b[m++] = tab[i][k++];
-		b[m] = 0;
+		while (t[i][k] != ',' && t[i][k] != ' ' && t[i][k] != '\n' && t[i][k])
+			b[data->m++] = t[i][k++];
+		b[data->m] = 0;
 	}
 	data->floor = create_rgb(atoi(r), atoi(g), atoi(b));
 }
@@ -66,34 +62,31 @@ void	ft_rgbinvalid(char **tab, int i, int m)
 	}
 }
 
-void	ft_makeceiling(char **tab, int i, int k, t_data *data)
+void	ft_makeceiling(char **t, int i, int k, t_data *data)
 {
-	char r[4];
-	char g[4];
-	char b[4];
-	int m;
-	m = 0;
+	char	r[256];
+	char	g[256];
+	char	b[256];
 
-	if (tab[i][k] == 'C')
+	if (t[i][k++] == 'C')
 	{
-		k++;
-		while (tab[i][k] == ' ')
+		while (t[i][k] == ' ')
 			k++;
-		while (tab[i][k] != ',' && tab[i][k] != ' ')
-			r[m++] = tab[i][k++];
-		r[m] = 0;
-		m = 0;
-		while (tab[i][k] == ' ' || tab[i][k] == ',')
+		while (t[i][k] != ',' && t[i][k] != ' ')
+			r[data->l++] = t[i][k++];
+		r[data->l] = 0;
+		data->l = 0;
+		while (t[i][k] == ' ' || t[i][k] == ',')
 			k++;
-		while (tab[i][k] != ',' && tab[i][k] != ' ')
-			g[m++] = tab[i][k++]; 
-		g[m] = 0;
-		m = 0;
-		while (tab[i][k] == ' ' || tab[i][k] == ',')
+		while (t[i][k] != ',' && t[i][k] != ' ')
+			g[data->l++] = t[i][k++];
+		g[data->l] = 0;
+		data->l = 0;
+		while (t[i][k] == ' ' || t[i][k] == ',')
 			k++;
-		while (tab[i][k] != ',' && tab[i][k] != ' ' && tab[i][k] != '\n')
-			b[m++] = tab[i][k++]; 
-		b[m] = 0;
+		while (t[i][k] != ',' && t[i][k] != ' ' && t[i][k] != '\n' && t[i][k])
+			b[data->l++] = t[i][k++];
+		b[data->l] = 0;
 	}
-	data->ceiling = create_rgb(atoi(r), atoi(g), atoi(b)); //switch to ft_atoi
+	data->ceiling = create_rgb(atoi(r), atoi(g), atoi(b));
 }
